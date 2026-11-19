@@ -25,6 +25,19 @@ function heeftPro(){ const t = profiel().tools||{}; return Object.values(t).incl
 const esc = s => String(s==null?'':s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 window.AIKD.esc = esc;
 
+/* cijfer per werkproces uit scores 1-4: 1 + 9 × (P − n) / 3n; voldoende = ≥5,5, geen 1, kritisch criterium ≥3 */
+function berekenCijfer(scores, onderlegger){
+  const n = scores.length;
+  if(!n || scores.some(s=>!s)) return null;
+  const P = scores.reduce((a,b)=>a+b,0);
+  const c = Math.round((1 + 9*(P-n)/(3*n))*10)/10;
+  const een = scores.includes(1);
+  const krit = (onderlegger||[]).some((o,i)=>o && o.k && scores[i]<3);
+  return {P, max:4*n, c, ok: c>=5.5 && !een && !krit, een, krit, tekst: c.toFixed(1).replace('.',',')};
+}
+window.AIKD.berekenCijfer = berekenCijfer;
+window.AIKD.NIVEAUS = ['Niet aangetoond','Onvoldoende','Voldoende','Goed'];
+
 /* ---------- gedeelde header ---------- */
 function header(titel, sub, rechtsHtml){
   return `<header class="top"><div class="top-in">
@@ -192,6 +205,30 @@ function startKeuzedeel(){
   window.AIKD.proBlok = proBlok;
 
   /* ---------- weekpagina ---------- */
+  /* eindproduct vooraf duidelijk: volledige kaart in de startweek, korte balk in de bouwweken */
+  function eindproduct(w){
+    const T = KD.toetsing; if(!T) return '';
+    let h = '';
+    T.producten.forEach(p=>{
+      if(!p.start) return;
+      const tag = p.id.toUpperCase(), hoort = o => (o.product||'').includes(tag);
+      const route = KD.weken.filter(x=>(x.opdrachten||[]).some(hoort));
+      const kort = p.naam.replace('Beroepsproduct ','BP');
+      if(p.start===w.nr){
+        h += `<div class="kaart eindproduct"><div class="kop"><span class="ico">🏁</span><h3>Hier werk je naartoe: ${esc(p.naam)}</h3></div>
+          <div class="tags"><span class="tag w">${esc(p.dossier)}</span><span class="tag">inleveren week ${p.week}</span></div>
+          <p>${p.wat}</p>
+          <h4>Dit lever je in week ${p.week} in</h4><ul>${p.inhoud.map(x=>`<li>${x}</li>`).join('')}</ul>
+          <h4>Zo bouw je het op, week voor week</h4>
+          <div class="tijdlijn">${route.map(x=>`<div><b>${x.nr===w.nr?'nu: ':''}wk ${x.nr}</b><span>${x.opdrachten.filter(hoort).map(o=>esc(o.titel)).join(' · ')}</span></div>`).join('')}</div>
+          <p class="hint" style="margin:10px 0 0">Nog geen stage of werk? Kies een vak- of praktijkdocent, het schoolbedrijf of een casus van je docent als opdrachtgever. Bekijk ook <a href="#toetsing">hoe je beoordeeld wordt</a>.</p></div>`;
+      } else if(w.nr>p.start && w.nr<=p.week && route.some(x=>x.nr===w.nr)){
+        h += `<div class="kaart vlak bouwbalk">🧩 <b>Deze week bouw je aan ${esc(kort)}</b> · inleveren week ${p.week} · <a href="#w${p.start}">wat is het eindproduct?</a></div>`;
+      }
+    });
+    return h;
+  }
+
   function toonWeek(w, scherm){
     zijmenu(w.nr);
     if(!SCHERMEN.some(s=>s[0]===scherm)) scherm = 'start';
@@ -201,6 +238,7 @@ function startKeuzedeel(){
 
     if(scherm==='start'){
       h += `<div class="kaart accent"><div class="kop"><span class="ico">🎯</span><h3>Na deze week kun je…</h3></div><ul>${w.doelen.map(d=>`<li>${d}</li>`).join('')}</ul></div>`;
+      h += eindproduct(w);
       if(w.contact){
         h += `<div class="kaart"><div class="kop"><span class="ico">🏫</span><h3>Contactmoment (3 uur)</h3></div>
           <div class="tijdlijn">${w.contact.tijdlijn.map(t=>`<div><b>${t[0]}</b><span>${t[1]}</span></div>`).join('')}</div></div>`;
@@ -316,14 +354,30 @@ function startKeuzedeel(){
       h += `<div class="kaart"><div class="kop"><span class="ico">${p.ico}</span><h3>${esc(p.naam)}</h3></div>
         <div class="tags"><span class="tag w">${esc(p.dossier)}</span><span class="tag">inleveren week ${p.week}</span></div>
         <p>${p.wat}</p><h4>Dit lever je in</h4><ul>${p.inhoud.map(x=>`<li>${x}</li>`).join('')}</ul>
-        <h4>Hierop word je beoordeeld (zelfcheck)</h4>
-        <div>${p.criteria.map((c,ci)=>{const k='toets.'+p.id+'.'+ci; return `<label class="vinkje" style="display:flex;margin:4px 0;color:var(--tekst);font-size:14.5px"><input type="checkbox" data-zc="${k}" ${st.af[k]?'checked':''}> ${c}</label>`;}).join('')}</div></div>`;
+        <h4>Hierop word je beoordeeld: geef jezelf een score</h4>
+        <p class="hint">Per criterium een score van 1 tot 4. Klik op een criterium om te zien wat bij elke score hoort (de beoordelaarsonderlegger).</p>
+        <div>${p.criteria.map((c,ci)=>{const k='toets.'+p.id+'.'+ci, o=(T.onderlegger||{})[p.id]?.[ci], v=+st.t[k]||0;
+          return `<div class="crit"><details><summary>${c}${o&&o.k?' <span class="tag">kritisch</span>':''}</summary>${o?`<p class="hint" style="margin:6px 0">Bewijs: ${esc(o.b)}</p><ol class="niv">${o.n.map((t,i)=>`<li><b>${i+1}</b><span>${esc(t)}</span></li>`).join('')}</ol>`:''}</details>
+            <div class="scores">${[1,2,3,4].map(n=>`<button class="chip ${v===n?'aan':''}" data-zs="${k}" data-v="${n}" title="${AIKD.NIVEAUS[n-1]}">${n}</button>`).join('')}</div></div>`;}).join('')}</div>
+        <p class="cijfer" data-cijfer="${p.id}"></p></div>`;
     });
     h += `<div class="kaart accent"><div class="kop"><span class="ico">🗣️</span><h3>Criteriumgericht gesprek (week 18)</h3></div><p>${T.gesprek}</p>
       <h4>Voorbeeldvragen om je op voor te bereiden</h4><ul>${T.vragen.map(v=>`<li>${v}</li>`).join('')}</ul></div>
       <div class="kaart vlak"><b>Normering.</b> ${T.norm}</div>`;
     $in.innerHTML = h;
-    $in.querySelectorAll('[data-zc]').forEach(c=>c.onchange=()=>{ st.af[c.dataset.zc]=c.checked; bewaar(); });
+    const toonCijfers = ()=> T.producten.forEach(p=>{
+      const el = $in.querySelector(`[data-cijfer="${p.id}"]`);
+      const r = berekenCijfer(p.criteria.map((c,ci)=>+st.t['toets.'+p.id+'.'+ci]||0), (T.onderlegger||{})[p.id]);
+      el.innerHTML = r ? `Indicatief cijfer bij jouw zelfscore: <b>${r.tekst}</b> (${r.P} van ${r.max} punten) · ${r.ok?'✅ voldoende':'⚠️ nog onvoldoende'}${r.een?' · er staat nog een 1':''}${r.krit?' · het kritische criterium moet minimaal een 3 zijn':''}`
+                       : 'Vul alle criteria in om een indicatief cijfer te zien.';
+    });
+    $in.querySelectorAll('[data-zs]').forEach(b=>b.onclick=()=>{
+      const k = b.dataset.zs, v = b.dataset.v;
+      st.t[k] = st.t[k]===v ? '' : v; bewaar();
+      $in.querySelectorAll(`[data-zs="${k}"]`).forEach(x=>x.classList.toggle('aan', x.dataset.v===st.t[k]));
+      toonCijfers();
+    });
+    toonCijfers();
     navbar(['#w18','Week 18'], ['#logboek','Mijn logboek']);
   }
 

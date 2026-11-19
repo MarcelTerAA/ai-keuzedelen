@@ -6,7 +6,7 @@
 <title>Docentenhandleiding AI-keuzedelen – Ter AA</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/stijl.css?v=3">
+<link rel="stylesheet" href="assets/stijl.css?v=4">
 <link rel="icon" href="assets/a.svg" type="image/svg+xml">
 <style>
 .wrap{max-width:980px;margin:0 auto;padding:22px 16px 60px}
@@ -17,16 +17,24 @@ section{margin-top:34px}
 .weekblok h4{margin:0 0 6px}
 .weekblok .tip{background:var(--l-mint);border-radius:10px;padding:8px 12px;font-size:14px;margin-top:8px}
 .form td.s{width:44px;text-align:center}
-.form td.s span{display:inline-block;width:18px;height:18px;border:1.5px solid var(--tekst);border-radius:4px}
+.form input[type=radio]{width:18px;height:18px;margin:0;accent-color:var(--d-groen);cursor:pointer}
+.form tr.totaal td{background:var(--vlak);font-size:14.5px}
+.onder td{font-size:13.5px;vertical-align:top;min-width:140px}
+.onder th{font-size:13px}
+.velden{display:flex;gap:22px;flex-wrap:wrap;font-size:14px;margin:6px 0 10px}
+.omreken{display:flex;flex-wrap:wrap;gap:4px;font-size:13px;margin:6px 0}
+.omreken span{background:var(--vlak);border-radius:8px;padding:3px 8px}
+.omreken span.vold{background:var(--l-mint)}
+.eind{font-size:16px}
 .tabsk{display:flex;gap:6px;margin:10px 0}
 @media print{.tabsk,.noprint{display:none}.weekblok{page-break-inside:avoid}}
 </style>
 </head>
 <body class="kd-docent">
-<script src="assets/logo.js?v=3"></script>
-<script src="assets/kern.js?v=3"></script>
-<script src="data/k1499.js?v=3"></script><script>window.KD1499 = window.KD;</script>
-<script src="data/k1515.js?v=3"></script><script>window.KD1515 = window.KD;</script>
+<script src="assets/logo.js?v=4"></script>
+<script src="assets/kern.js?v=4"></script>
+<script src="data/k1499.js?v=4"></script><script>window.KD1499 = window.KD;</script>
+<script src="data/k1515.js?v=4"></script><script>window.KD1515 = window.KD;</script>
 <div id="kop"></div>
 <div class="wrap" id="wrap"></div>
 <script>
@@ -42,25 +50,44 @@ const weken = (KD, link) => KD.weken.map(w=>`<div class="weekblok"><h4>Week ${w.
   ${w.contact.docent?`<div class="tip">💡 ${esc(w.contact.docent)}</div>`:''}
   <p class="noprint" style="margin:6px 0 0;font-size:13px"><a href="${link}#w${w.nr}">Bekijk studentpagina →</a></p></div>`).join('');
 
-const formulier = (KD) => KD.toetsing.producten.map(p=>`<div class="kaart"><h3 style="margin-top:0">${p.ico} ${esc(p.naam)}</h3><p class="hint">${esc(p.dossier)} · inleveren week ${p.week}</p>
-  <div class="tabelwrap"><table class="tabel form"><tr><th>Gedragscriterium (kwalificatiedossier)</th><th>O</th><th>V</th><th>G</th><th>Toelichting / bewijs</th></tr>
-  ${p.criteria.map(c=>`<tr><td>${esc(c)}</td><td class="s"><span></span></td><td class="s"><span></span></td><td class="s"><span></span></td><td style="min-width:160px"></td></tr>`).join('')}</table></div></div>`).join('')
-  + `<div class="kaart vlak"><h3 style="margin-top:0">Criteriumgericht gesprek: vragenbank</h3><ol>${KD.toetsing.vragen.map(v=>`<li>${esc(v)}</li>`).join('')}</ol><p class="hint">${esc(KD.toetsing.norm)}</p></div>`;
+const N = AIKD.NIVEAUS;
+const omreken = n => { let s=''; for(let P=n;P<=4*n;P++){ const c = Math.round((1+9*(P-n)/(3*n))*10)/10; s+=`<span class="${c>=5.5?'vold':''}">${P} → ${c.toFixed(1).replace('.',',')}</span>`; } return s; };
+const formulier = (KD, kd) => {
+  const O = KD.toetsing.onderlegger||{}, ps = KD.toetsing.producten;
+  const ns = [...new Set(ps.map(p=>p.criteria.length))];
+  return ps.map(p=>{
+    const ond = O[p.id]||[], kort = p.naam.replace('Beroepsproduct ','BP'), n = p.criteria.length;
+    return `<div class="kaart"><h3 style="margin-top:0">${p.ico} Beoordelingsformulier ${esc(kort)}</h3><p class="hint">${esc(p.dossier)} · inleveren week ${p.week}</p>
+    <div class="velden"><span>Deelnemer: ____________________</span><span>Beoordelaar(s): ____________________</span><span>Datum: __________</span></div>
+    <div class="tabelwrap"><table class="tabel form" data-form="${kd}"><tr><th>Gedragscriterium (kwalificatiedossier)</th>${[1,2,3,4].map(i=>`<th title="${N[i-1]}">${i}</th>`).join('')}<th>Toelichting / bewijs</th></tr>
+    ${p.criteria.map((c,ci)=>`<tr><td>${esc(c)}${ond[ci]&&ond[ci].k?' <b>(kritisch)</b>':''}</td>${[1,2,3,4].map(i=>`<td class="s"><input type="radio" name="${kd}-${p.id}-${ci}" value="${i}" aria-label="score ${i}"></td>`).join('')}<td style="min-width:160px"></td></tr>`).join('')}
+    <tr class="totaal"><td colspan="6" data-uit="${kd}-${p.id}"></td></tr></table></div></div>
+    <details class="kaart"><summary><b>${p.ico} Beoordelaarsonderlegger ${esc(kort)}</b> <span class="hint">(wat hoort bij score 1, 2, 3 en 4?)</span></summary>
+    <div class="tabelwrap" style="margin-top:10px"><table class="tabel onder"><tr><th>Criterium en bewijs</th>${N.map((t,i)=>`<th>${i+1} · ${t}</th>`).join('')}</tr>
+    ${p.criteria.map((c,ci)=>{ const o = ond[ci]; return `<tr><td><b>${esc(c)}</b>${o?`<br><span class="hint">Bewijs: ${esc(o.b)}</span>`:''}${o&&o.k?' <span class="tag">kritisch</span>':''}</td>${o?o.n.map(t=>`<td>${esc(t)}</td>`).join(''):'<td colspan="4"></td>'}</tr>`; }).join('')}</table></div></details>`;
+  }).join('')
+  + `<div class="kaart vlak"><h3 style="margin-top:0">Eindcijfer</h3>
+    <p class="eind" data-eind="${kd}"></p>
+    <p class="hint">Eindcijfer keuzedeel (voorstel): het gemiddelde van de cijfers voor W1 en W2, op voorwaarde dat beide werkprocessen voldoende zijn.</p>
+    ${ns.map(n=>`<p style="margin:10px 0 2px"><b>Omrekentabel bij ${n} criteria</b> (punten → cijfer; groen = 5,5 of hoger)</p><div class="omreken">${omreken(n)}</div>`).join('')}
+    <button class="knop rand klein noprint" data-leeg="${kd}" style="margin-top:10px">Formulieren ${kd.toUpperCase()} leegmaken</button></div>`
+  + `<div class="kaart vlak"><h3 style="margin-top:0">Criteriumgericht gesprek: vragenbank</h3><ol>${KD.toetsing.vragen.map(v=>`<li>${esc(v)}</li>`).join('')}</ol></div>`;
+};
 
 const uren = KD => { const z = KD.weken.reduce((s,w)=>s+(w.urenLeren||0)+(w.opdrachten||[]).reduce((t,o)=>t+o.uren,0),0); return z; };
 
 document.getElementById('wrap').innerHTML = `
 <section class="hero" style="margin-top:0"><div class="grootA">${TERAA_A}</div>
   <span class="label">Voor docenten en opleidingsmanagers</span><h1>Docentenhandleiding AI-keuzedelen</h1>
-  <p>K1499 <i>Werken met generatieve AI</i> en K1515 <i>Een eigen generatieve AI-oplossing samenstellen</i>: opzet, weekplanning, contactmomenten, toetsing en LLO.</p></section>
+  <p>K1499 <i>Werken met generatieve AI</i> en K1515 <i>Een eigen generatieve AI-oplossing samenstellen</i>: opzet, weekplanning, contactmomenten en toetsing.</p></section>
 
 <div class="kaart vlak"><b>Inhoud</b><ol class="inhoudsopgave">
 <li><a href="#visie">Visie en opzet</a></li><li><a href="#uren">Weekritme en urenverantwoording</a></li><li><a href="#a">K1499 per week</a></li><li><a href="#b">K1515 per week</a></li>
-<li><a href="#toets">Toetsing en beoordelingsformulieren</a></li><li><a href="#llo">LLO: werkenden en collega's</a></li><li><a href="#modules">Modules voor het reguliere onderwijs</a></li><li><a href="#tools">Tools, privacy en beheer</a></li></ol></div>
+<li><a href="#toets">Toetsing, beoordeling en onderlegger</a></li><li><a href="#modules">Modules voor het reguliere onderwijs</a></li><li><a href="#tools">Tools, privacy en beheer</a></li></ol></div>
 
 <section id="visie"><h2>1. Visie en opzet</h2>
 <p><b>AI hoort in het beroep, niet ernaast.</b> Werken met AI wordt een basisvaardigheid in elk beroep waarvoor we opleiden. Daarom is in beide keuzedelen <b>de eigen beroepspraktijk de rode draad</b>: elke opdracht wordt uitgevoerd in de context van de opleiding of het werk van de deelnemer. De website toont per week een voorbeeld voor ICT, Bouwkunde, Techniek &amp; Technologie, Design en LLO.</p>
-<p>De keuzedelen zijn zo opgebouwd dat ze ook <b>als losse modules</b> in het reguliere onderwijs bruikbaar zijn (zie §7). Zo werkt het keuzedeel ook als opstap naar AI als vast onderdeel van elke opleiding.</p>
+<p>De keuzedelen zijn zo opgebouwd dat ze ook <b>als losse modules</b> in het reguliere onderwijs bruikbaar zijn (zie §6). Zo werkt het keuzedeel ook als opstap naar AI als vast onderdeel van elke opleiding.</p>
 <div class="tabelwrap"><table class="tabel"><tr><th></th><th>K1499 – Werken met generatieve AI</th><th>K1515 – Eigen AI-oplossing samenstellen</th></tr>
 <tr><td>Rol</td><td>AI-gebruiker</td><td>AI-bouwer</td></tr>
 <tr><td>Doelgroep (dossier)</td><td>werkenden met weinig AI-ervaring, alle sectoren</td><td>werkenden niveau 3/4 met basiskennis generatieve AI</td></tr>
@@ -81,22 +108,18 @@ document.getElementById('wrap').innerHTML = `
 <section id="a"><h2>3. K1499 – contactmomenten per week</h2>${weken(A,'k1499.html')}</section>
 <section id="b"><h2>4. K1515 – contactmomenten per week</h2>${weken(B,'k1515.html')}</section>
 
-<section id="toets"><h2>5. Toetsing en beoordelingsformulieren</h2>
-<p>Per keuzedeel twee beroepsproducten (één per werkproces) en een criteriumgericht gesprek. De criteria zijn letterlijk de gedragscriteria uit het kwalificatiedossier. Het <b>logboek</b> dat deelnemers exporteren (prompts, iteraties, factchecks, testsets, configuratie) is het procesbewijs. <i>Dit is een voorstel. Het definitieve examenplan, de cesuur en de vaststelling liggen bij de examencommissie.</i></p>
+<section id="toets"><h2>5. Toetsing, beoordeling en onderlegger</h2>
+<p>Per keuzedeel twee beroepsproducten (één per werkproces) en een criteriumgericht gesprek. De criteria zijn letterlijk de gedragscriteria uit het kwalificatiedossier. Het <b>logboek</b> dat deelnemers exporteren (prompts, iteraties, factchecks, testsets, configuratie) is het procesbewijs.</p>
+<div class="kaart"><h3 style="margin-top:0">Zo beoordeel je</h3><ol>
+<li>Scoor elk gedragscriterium op een schaal van <b>1 tot 4</b>: ${N.map((t,i)=>`<b>${i+1}</b> = ${t.toLowerCase()}`).join(', ')}. De <b>beoordelaarsonderlegger</b> (onder elk formulier) beschrijft per criterium wat bij elke score hoort en waar je het bewijs vindt.</li>
+<li>Per werkproces volgt een <b>cijfer</b>: <code>1 + 9 × (punten − aantal criteria) / (3 × aantal criteria)</code>. Alles op 3 geeft een 7,0, alles op 4 een 10, gemiddeld 2,5 geeft een 5,5. Op het scherm rekent het formulier automatisch; op papier gebruik je de omrekentabel.</li>
+<li>Een werkproces is <b>voldoende</b> bij een cijfer van 5,5 of hoger, als geen enkel criterium een 1 heeft en het <b>kritische criterium</b> (werken volgens (wettelijke) kaders) minimaal een 3 is.</li>
+<li>Het <b>criteriumgericht gesprek</b> (week 18) bevestigt of corrigeert de scores: pas een score aan als het gesprek laat zien dat het bewijs niet (of juist wel) van de deelnemer zelf is.</li></ol>
+<p class="hint" style="margin:0"><i>Dit is een voorstel. Het definitieve examenplan, de cesuur en de vaststelling liggen bij de examencommissie.</i> Deelnemers zien dezelfde onderlegger op de pagina Toetsing en kunnen zichzelf vooraf scoren.</p></div>
 <div class="tabsk"><button class="chip aan" data-t="ta">K1499</button><button class="chip" data-t="tb">K1515</button></div>
-<div id="ta">${formulier(A)}</div><div id="tb" hidden>${formulier(B)}</div></section>
+<div id="ta">${formulier(A,'k1499')}</div><div id="tb" hidden>${formulier(B,'k1515')}</div></section>
 
-<section id="llo"><h2>6. LLO: werkenden, collega's en externen</h2>
-<div class="kaart"><ul>
-<li><b>Certificaat</b>: beide keuzedelen hebben een certificaat (ingangsdatum 01-05-2026) en kunnen onder voorwaarden in de derde leerweg worden aangeboden.</li>
-<li><b>Contactmoment</b>: eventueel als avondvariant (bijv. 18:30–21:30) of hybride. Het weekritme blijft gelijk.</li>
-<li><b>Eigen werk = BPV</b>: de "beroepspraktijk" is de eigen werkplek. Het afstemmingsgesprek voert de deelnemer met de eigen leidinggevende of een collega.</li>
-<li><b>Docenten van andere teams</b>: profiel "LLO" kiezen. Een interessante variant is als praktijkopdracht een AI-onderdeel ontwerpen voor de eigen les (K1499) of een assistent voor het eigen vak bouwen (K1515). Zo komt AI direct in het reguliere onderwijs terecht.</li>
-<li><b>Vrijstelling/instroom</b>: ervaren deelnemers kunnen K1499 week 1–4 versneld doorlopen (de check per week laat zien of de kennis er is). Instromen in K1515 gaat via de intake.</li>
-<li><b>Tools</b>: werkenden gebruiken de tools die hun eigen organisatie toestaat. Dat is meteen een knock-outcriterium in het tooladvies.</li>
-</ul></div></section>
-
-<section id="modules"><h2>7. Modules voor het reguliere onderwijs</h2>
+<section id="modules"><h2>6. Modules voor het reguliere onderwijs</h2>
 <p>Deze weken werken ook los, als les of mini-module in een reguliere opleiding (alle stof en oefeningen staan open op de site):</p>
 <div class="tabelwrap"><table class="tabel"><tr><th>Module</th><th>Weken</th><th>Past bij</th></tr>
 <tr><td>Hoe werkt AI? (tokens, hallucinaties)</td><td><a href="k1499.html#w2">K1499 wk 2</a> + <a href="k1499.html#w3">3</a></td><td>elke opleiding, leerjaar 1</td></tr>
@@ -109,7 +132,7 @@ document.getElementById('wrap').innerHTML = `
 <tr><td>Hoe leert een neuraal netwerk?</td><td><a href="k1515.html#w2">K1515 wk 2</a></td><td>ICT, Techniek &amp; Technologie</td></tr>
 <tr><td>AI testen en evalueren</td><td><a href="k1515.html#w12">K1515 wk 12</a></td><td>ICT (testen), kwaliteitszorg</td></tr></table></div></section>
 
-<section id="tools"><h2>8. Tools, privacy en beheer</h2>
+<section id="tools"><h2>7. Tools, privacy en beheer</h2>
 <div class="kaart"><ul>
 <li><b>Basis</b>: Microsoft Copilot met het schoolaccount (gegevensbescherming). Daarnaast ChatGPT, Claude en Gemini in de gratis versie. Opdrachten met <span class="tag pro">PRO</span> zijn optioneel voor deelnemers met een betaalde versie.</li>
 <li><b>Leeftijd</b>: minimumleeftijden verschillen per tool (claude.ai is 18+). Laat minderjarige studenten tools gebruiken die voor hun leeftijd zijn toegestaan, en standaard Copilot met het schoolaccount.</li>
@@ -118,6 +141,29 @@ document.getElementById('wrap').innerHTML = `
 <li><b>Inhoud aanpassen</b>: alle weekinhoud staat in <code>data/k1499.js</code> en <code>data/k1515.js</code> (één object per week: doelen, contactmoment, uitleg, oefening, opdrachten, contextvoorbeelden, quiz). Aanpassen kan direct in GitHub. Er is geen build-stap nodig.</li>
 </ul></div></section>`;
 
+const reken = kd => {
+  const KD = kd==='k1499' ? A : B, O = KD.toetsing.onderlegger||{};
+  const res = KD.toetsing.producten.map(p=>{
+    const sc = p.criteria.map((c,ci)=>+((document.querySelector(`input[name="${kd}-${p.id}-${ci}"]:checked`)||{}).value||0));
+    const r = AIKD.berekenCijfer(sc, O[p.id]), el = document.querySelector(`[data-uit="${kd}-${p.id}"]`);
+    el.innerHTML = r
+      ? `Punten: <b>${r.P}</b> van ${r.max} · Cijfer werkproces: <b>${r.tekst}</b> · <b>${r.ok?'voldoende':'onvoldoende'}</b>${r.een?' (er staat een 1)':''}${r.krit?' (kritisch criterium lager dan 3)':''}`
+      : `Punten: ____ van ${4*sc.length} · Cijfer werkproces: ____ · Voldoende: ja / nee <span class="noprint hint">(${sc.filter(Boolean).length} van ${sc.length} ingevuld)</span>`;
+    return r;
+  });
+  const e = document.querySelector(`[data-eind="${kd}"]`);
+  if(res.every(Boolean)){
+    const gem = Math.round(res.reduce((s,r)=>s+r.c,0)/res.length*10)/10;
+    e.innerHTML = res.map((r,i)=>`W${i+1}: <b>${r.tekst}</b>`).join(' · ') + ` · Keuzedeel: <b>${res.every(r=>r.ok) ? gem.toFixed(1).replace('.',',')+' (behaald)' : 'niet behaald'}</b>`;
+  } else e.innerHTML = `W1: ____ · W2: ____ · Eindcijfer keuzedeel: ____`;
+};
+['k1499','k1515'].forEach(kd=>{
+  reken(kd);
+  document.querySelectorAll(`table[data-form="${kd}"]`).forEach(t=>t.addEventListener('change',()=>reken(kd)));
+  document.querySelector(`[data-leeg="${kd}"]`).onclick = ()=>{ document.querySelectorAll(`input[name^="${kd}-"]`).forEach(i=>i.checked=false); reken(kd); };
+});
+
+window.addEventListener('beforeprint',()=>document.querySelectorAll('details').forEach(d=>d.open=true));
 document.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{ document.querySelectorAll('[data-t]').forEach(x=>x.classList.toggle('aan',x===b)); document.getElementById('ta').hidden = b.dataset.t!=='ta'; document.getElementById('tb').hidden = b.dataset.t!=='tb'; });
 })();
 </script>

@@ -215,3 +215,18 @@ input[type=range]{width:100%;accent-color:var(--accent-d)}
 @media print{.top,.zij,.navbar{display:none}main{padding:0}.shell{display:block}}
 
 .top .logo,.hero .grootA,.tegel .grootA{color:var(--basis)}
+
+/* eindproduct en beoordeling */
+.kaart.eindproduct{border:2px solid var(--accent);box-shadow:0 0 0 4px var(--accent-l)}
+.kaart.eindproduct .tijdlijn div{grid-template-columns:92px 1fr}
+.kaart.bouwbalk{padding:11px 16px;font-size:14.5px}
+.crit{display:flex;gap:12px;align-items:flex-start;border-top:1px solid var(--lijn);padding:8px 0}
+.crit details{flex:1;font-size:14.5px}
+.crit summary{cursor:pointer}
+.crit .scores{display:flex;gap:4px;flex-shrink:0}
+.crit .chip{min-width:34px;padding-left:0;padding-right:0;justify-content:center}
+.niv{list-style:none;padding:0;margin:4px 0 6px}
+.niv li{display:flex;gap:8px;margin:4px 0;font-size:14px}
+.niv li b{flex:0 0 22px;height:22px;border-radius:50%;background:var(--vlak);text-align:center;line-height:22px;font-size:12.5px}
+.cijfer{background:var(--vlak);border-radius:12px;padding:10px 14px;margin:10px 0 0;font-size:14.5px}
+@media(max-width:600px){.crit{flex-direction:column;gap:6px}}

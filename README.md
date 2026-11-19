@@ -8,7 +8,7 @@ Site: https://marcelteraa.github.io/ai-keuzedelen/
 
 - `index.html` – startpagina
 - `k1499.html`, `k1515.html` – 18 weken per keuzedeel (Overzicht → Leren → Oefenen → Opdrachten → Check), logboek, toetsing
-- `docent.html` – docentenhandleiding (contactmomenten, beoordelingsformulieren, LLO, modules)
+- `docent.html` – docentenhandleiding (contactmomenten, beoordelingsformulieren met onderlegger en cijferberekening, modules)
 - `data/k1499.js`, `data/k1515.js` – alle weekinhoud (hier aanpassen, geen build-stap)
 - `assets/` – huisstijl Ter AA (Poppins, #EFA242), kern en interactieve oefeningen
 
