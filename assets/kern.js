@@ -142,7 +142,13 @@ function startKeuzedeel(){
       ${Object.entries(TOOLS).map(([k,n])=>`<tr><td>${n}</td>${['','gratis','betaald'].map(v=>`<td><input type="radio" name="t_${k}" value="${v}" ${((p.tools||{})[k]||'')===v?'checked':''}></td>`).join('')}</tr>`).join('')}
       </table></div>
       <div class="kaart vlak"><b>Privacy-afspraak.</b> Gebruik bij voorkeur <b>Copilot met je school- of werkaccount</b> (dan wordt je invoer niet gebruikt om het model te trainen). Zet in géén enkele tool persoonsgegevens van anderen, wachtwoorden of vertrouwelijke bedrijfsinformatie. In week 4 leer je precies waarom.</div>
-      <p class="bewaard" id="pbew"></p>`;
+      <p class="bewaard" id="pbew"></p>
+      <details class="kaart" id="wisblok" style="margin-top:24px"><summary style="cursor:pointer;font-weight:600">🗑️ Gegevens wissen / opnieuw beginnen…</summary>
+        <p style="margin-top:10px">Kies wat je van <b>dit apparaat</b> wilt wissen. Dit kan niet ongedaan worden gemaakt. <b>Exporteer eerst je logboek</b> als je je werk wilt bewaren (<a href="#logboek">naar logboek</a>).</p>
+        ${[['profiel','👤 Mijn profiel','opleiding, beroep en tools'],['k1499','📘 K1499 Werken met generatieve AI','antwoorden, vinkjes, uren, quizscores, oefeningen, stellingen'],['k1515','📗 K1515 Eigen AI-oplossing samenstellen','antwoorden, vinkjes, uren, quizscores, oefeningen, stellingen']].map(([k,n,u])=>
+          `<label class="vinkje" style="display:flex;margin:8px 0;color:var(--tekst);font-size:15px;align-items:flex-start"><input type="checkbox" data-wis="${k}" style="margin-top:3px"><span><b>${n}</b><br><small class="hint">${u}</small></span></label>`).join('')}
+        <div class="knoppen"><button class="knop licht klein" id="wisalles">Alles selecteren</button><button class="knop oranje klein" id="wisnu" disabled>Geselecteerde wissen</button></div>
+        <p class="bewaard" id="wisbew"></p></details>`;
     const opslaan = () => { const q = profiel();
       q.beroep = document.getElementById('beroep').value;
       q.tools = {}; Object.keys(TOOLS).forEach(k=>{ const r = document.querySelector(`input[name=t_${k}]:checked`); q.tools[k] = r ? r.value : ''; });
@@ -150,7 +156,23 @@ function startKeuzedeel(){
     document.querySelectorAll('#dg .optie').forEach(b => b.onclick = () => {
       const q = profiel(); q.doelgroep = b.dataset.k; schrijf('aikd_profiel', q);
       document.querySelectorAll('#dg .optie').forEach(x=>x.classList.toggle('aan', x===b)); opslaan(); });
-    $in.querySelectorAll('input').forEach(i => i.addEventListener('input', opslaan));
+    $in.querySelectorAll('input:not([data-wis])').forEach(i => i.addEventListener('input', opslaan));
+    // wissen
+    const wisBoxen = [...$in.querySelectorAll('[data-wis]')];
+    const wisKnop = document.getElementById('wisnu');
+    const updWis = () => { wisKnop.disabled = !wisBoxen.some(b=>b.checked); };
+    wisBoxen.forEach(b => b.onchange = updWis);
+    document.getElementById('wisalles').onclick = () => { wisBoxen.forEach(b=>b.checked=true); updWis(); };
+    wisKnop.onclick = () => {
+      const keuze = wisBoxen.filter(b=>b.checked).map(b=>b.dataset.wis);
+      const namen = {profiel:'je profiel', k1499:'alles van K1499', k1515:'alles van K1515'};
+      if(!confirm('Weet je het zeker? Je wist: ' + keuze.map(k=>namen[k]).join(', ') + '.\n\nDit kan niet ongedaan worden gemaakt.')) return;
+      keuze.forEach(k => { try{ localStorage.removeItem(k==='profiel' ? 'aikd_profiel' : 'aikd_'+k); }catch(e){} });
+      if(keuze.includes(KD.code)) st = {t:{}, af:{}, quiz:{}, wd:{}, refl:{}};
+      toonProfiel();
+      document.getElementById('wisbew').textContent = '';
+      const m = document.getElementById('pbew'); m.textContent = '✓ Gewist: ' + keuze.map(k=>namen[k]).join(', ');
+    };
     navbar(['#start','Start'], ['#w1','Naar week 1']);
   }
 
@@ -327,7 +349,7 @@ function startKeuzedeel(){
       <p>Je logboek is je <b>bewijs</b> voor de beroepsproducten en het eindgesprek. Exporteer het regelmatig (minstens na elke fase) en bewaar het in je OneDrive of portfolio.</p>
       <div class="knoppen"><button class="knop" id="dl">⬇ Download (.md)</button><button class="knop rand" id="kp">📋 Kopieer</button><button class="knop rand" id="pr">🖨 Afdrukken / PDF</button></div>
       <pre id="logtekst">${esc(t)}</pre>
-      <details class="kaart vlak"><summary>Opnieuw beginnen…</summary><p>Dit wist al je antwoorden van ${KD.code.toUpperCase()} in deze browser. Je profiel blijft bewaard.</p><button class="knop oranje klein" id="wis">Alles van ${KD.code.toUpperCase()} wissen</button></details>`;
+      <details class="kaart vlak"><summary>Opnieuw beginnen…</summary><p>Dit wist al je antwoorden van ${KD.code.toUpperCase()} in deze browser. Je profiel blijft bewaard. Profiel of beide keuzedelen wissen? Dat kan bij <a href="#profiel">Mijn profiel</a>.</p><button class="knop oranje klein" id="wis">Alles van ${KD.code.toUpperCase()} wissen</button></details>`;
     document.getElementById('dl').onclick = ()=>{ const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([t],{type:'text/markdown'})); a.download=`logboek-${KD.code}.md`; a.click(); };
     document.getElementById('kp').onclick = e=>{ navigator.clipboard.writeText(t).then(()=>e.target.textContent='✓ Gekopieerd'); };
     document.getElementById('pr').onclick = ()=>window.print();
