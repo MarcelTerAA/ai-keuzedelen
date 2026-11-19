@@ -56,17 +56,19 @@ function startKeuzedeel(){
   document.getElementById('menuknop').onclick = () => document.body.classList.toggle('menu-open');
 
   const week = n => KD.weken.find(w => w.nr === n);
-  const weekKlaar = w => (w.opdrachten||[]).length>0 && w.opdrachten.every(o => st.af[w.nr+'.'+o.id]);
+  // Leren + oefenen telt mee zodra het vinkje op het Check-scherm aan staat (gaat automatisch aan na de quiz)
+  const weekKlaar = w => (w.opdrachten||[]).every(o => st.af[w.nr+'.'+o.id]) && (!w.urenLeren || st.af[w.nr+'.leren']);
   const urenWeek = w => (w.opdrachten||[]).reduce((s,o)=>s+(o.uren||0),0) + (w.urenLeren||0);
-  const urenGedaan = () => KD.weken.reduce((s,w)=> s + (w.opdrachten||[]).reduce((t,o)=> t + (st.af[w.nr+'.'+o.id] ? (o.uren||0) : 0),0),0);
-  const urenTotaal = () => KD.weken.reduce((s,w)=>s+(w.opdrachten||[]).reduce((t,o)=>t+(o.uren||0),0),0);
+  const urenGedaanWeek = w => (w.opdrachten||[]).reduce((t,o)=> t + (st.af[w.nr+'.'+o.id] ? (o.uren||0) : 0),0) + (st.af[w.nr+'.leren'] ? (w.urenLeren||0) : 0);
+  const urenGedaan = () => KD.weken.reduce((s,w)=> s + urenGedaanWeek(w),0);
+  const urenTotaal = () => KD.weken.reduce((s,w)=> s + urenWeek(w),0);
 
   function zijmenu(huidig){
     const klaarN = KD.weken.filter(weekKlaar).length;
     let h = `<a href="#start" class="${huidig==='start'?'nu':''}"><span class="nr">⌂</span>Start &amp; planning</a>
       <a href="#profiel" class="${huidig==='profiel'?'nu':''}"><span class="nr">👤</span>Mijn profiel &amp; tools</a>
       <div class="voortgang meter" title="${klaarN} van ${KD.weken.length} weken af"><i style="width:${Math.round(klaarN/KD.weken.length*100)}%"></i></div>
-      <div class="hint" style="padding:0 10px">${klaarN}/${KD.weken.length} weken af · ${urenGedaan()} van ${urenTotaal()} opdracht-uren af</div>`;
+      <div class="hint" style="padding:0 10px">${klaarN}/${KD.weken.length} weken af · ${urenGedaan()} van ${urenTotaal()} zelfstudie-uren af</div>`;
     KD.fases.forEach(f => {
       h += `<h4>${esc(f.naam)}</h4>`;
       f.weken.forEach(n => { const w = week(n);
@@ -184,8 +186,8 @@ function startKeuzedeel(){
           <div class="schaal opties twee" style="grid-template-columns:repeat(4,1fr)">${['Helemaal eens','Eens','Oneens','Helemaal oneens'].map(v=>`<button class="chip ${st.t[w.nr+'.stelling']===v?'aan':''}" data-st="${v}">${v}</button>`).join('')}</div>
           <p class="hint" style="margin:8px 0 0">Kies vóór de les. In de les bespreek je waarom.</p></div>`;
       }
-      h += `<div class="kaart vlak"><div class="kop"><span class="ico">🗓️</span><h3>Zelfstandig deze week (±${urenWeek(w)} uur)</h3></div><ul>
-        ${w.urenLeren?`<li>Leren + oefenen: ${w.urenLeren} u</li>`:''}
+      h += `<div class="kaart vlak"><div class="kop"><span class="ico">🗓️</span><h3>Zelfstandig deze week (${urenGedaanWeek(w)} van ±${urenWeek(w)} uur af)</h3></div><ul>
+        ${w.urenLeren?`<li>Leren + oefenen: ${w.urenLeren} u ${st.af[w.nr+'.leren']?'✅':''}</li>`:''}
         ${(w.opdrachten||[]).map(o=>`<li>${esc(o.titel)}: ${o.uren} u ${st.af[w.nr+'.'+o.id]?'✅':''}</li>`).join('')}</ul></div>`;
     }
     if(scherm==='leren'){
@@ -211,6 +213,8 @@ function startKeuzedeel(){
     }
     if(scherm==='check'){
       h += `<div id="quiz"></div>
+        ${w.urenLeren?`<div class="opdracht ${st.af[w.nr+'.leren']?'af':''}"><div class="kopregel"><h3>Leren en oefenen van deze week</h3><label class="vinkje"><input type="checkbox" ${st.af[w.nr+'.leren']?'checked':''} data-af="${w.nr}.leren"> klaar</label></div>
+          <div class="tags"><span class="tag uur">⏱ ${w.urenLeren} uur</span></div><p class="hint" style="margin:0">${w.quiz&&w.quiz.length?'Gaat vanzelf aan als je de check hierboven hebt gemaakt. Je kunt het ook zelf aanvinken.':'Vink aan als je Leren en Oefenen hebt doorgewerkt.'}</p></div>`:''}
         <div class="kaart accent"><div class="kop"><span class="ico">🪞</span><h3>Reflectie</h3></div><p>${esc(w.reflectie||'Wat neem je mee van deze week naar je werk?')}</p>
         <textarea data-t="${w.nr}.reflectie" placeholder="Schrijf 3–5 zinnen. Wees eerlijk: wat ging goed, wat was lastig, wat ga je anders doen?">${esc(st.t[w.nr+'.reflectie']||'')}</textarea><div class="bewaard" data-b="${w.nr}.reflectie"></div></div>`;
     }
@@ -218,8 +222,11 @@ function startKeuzedeel(){
 
     // koppelingen
     $in.querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>{ st.t[w.nr+'.stelling']=b.dataset.st; bewaar(); $in.querySelectorAll('[data-st]').forEach(x=>x.classList.toggle('aan',x===b)); });
-    $in.querySelectorAll('textarea[data-t]').forEach(t=>{ let tm; t.addEventListener('input',()=>{ st.t[t.dataset.t]=t.value; clearTimeout(tm); tm=setTimeout(()=>{bewaar(); const b=$in.querySelector(`[data-b="${t.dataset.t}"]`); if(b){b.textContent='✓ Bewaard'; setTimeout(()=>b.textContent='',1500);} },400); }); });
-    $in.querySelectorAll('input[data-af]').forEach(c=>c.onchange=()=>{ st.af[c.dataset.af]=c.checked; bewaar(); c.closest('.opdracht').classList.toggle('af',c.checked); zijmenu(w.nr); });
+    // Herinnering: tekst geschreven maar nog niet afgevinkt → uren tellen pas mee na "klaar"
+    const herinner = key => { const b = $in.querySelector(`[data-b="${key}"]`); if(!b || !(key in st.t) || !$in.querySelector(`input[data-af="${key}"]`)) return;
+      b.textContent = (st.t[key]||'').trim() && !st.af[key] ? '✓ Bewaard · Klaar? Vink "klaar" aan, dan tellen de uren mee.' : ''; };
+    $in.querySelectorAll('textarea[data-t]').forEach(t=>{ let tm; herinner(t.dataset.t); t.addEventListener('input',()=>{ st.t[t.dataset.t]=t.value; clearTimeout(tm); tm=setTimeout(()=>{bewaar(); const b=$in.querySelector(`[data-b="${t.dataset.t}"]`); if(b){b.textContent='✓ Bewaard'; setTimeout(()=>{ b.textContent=''; herinner(t.dataset.t); },1500);} },400); }); });
+    $in.querySelectorAll('input[data-af]').forEach(c=>c.onchange=()=>{ st.af[c.dataset.af]=c.checked; bewaar(); c.closest('.opdracht').classList.toggle('af',c.checked); herinner(c.dataset.af); zijmenu(w.nr); });
     if(scherm==='oefenen') renderWidgets(w);
     if(scherm==='check') renderQuiz(w);
 
@@ -268,7 +275,9 @@ function startKeuzedeel(){
         vd.querySelector('.fb').innerHTML = `<div class="feedback ${antw[qi]===q.g?'goed':'fout'}">${antw[qi]===q.g?'✔ Goed. ':'✘ Niet goed. '}${q.u||''}</div>`;
         if(Object.keys(antw).length===w.quiz.length){
           const goed = w.quiz.filter((q,i)=>antw[i]===q.g).length;
-          st.quiz[w.nr] = Math.max(st.quiz[w.nr]||0, goed); bewaar();
+          st.quiz[w.nr] = Math.max(st.quiz[w.nr]||0, goed);
+          if(w.urenLeren && !st.af[w.nr+'.leren']){ st.af[w.nr+'.leren'] = true; const c = document.querySelector(`input[data-af="${w.nr}.leren"]`); if(c){ c.checked = true; c.closest('.opdracht').classList.add('af'); } zijmenu(w.nr); }
+          bewaar();
           document.getElementById('qscore').innerHTML = `<div class="kaart vlak" style="margin-top:10px"><span class="score">${goed}/${w.quiz.length}</span> <span class="hint">beste score tot nu toe: ${st.quiz[w.nr]}/${w.quiz.length}</span>
             ${goed<w.quiz.length*0.7?'<p style="margin:8px 0 0">Lees de uitleg bij <a href="#w'+w.nr+'/leren">Leren</a> nog eens en probeer opnieuw (pagina herladen).</p>':''}</div>`;
         }
