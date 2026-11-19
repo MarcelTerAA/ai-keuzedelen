@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Docentenhandleiding AI-keuzedelen – Ter AA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/stijl.css">
+<link rel="icon" href="assets/a.svg" type="image/svg+xml">
+<style>
+.wrap{max-width:980px;margin:0 auto;padding:22px 16px 60px}
+.inhoudsopgave{columns:2;font-size:14.5px}
+@media(max-width:600px){.inhoudsopgave{columns:1}}
+section{margin-top:34px}
+.weekblok{border:1.5px solid var(--lijn);border-radius:16px;padding:14px 16px;margin:0 0 10px;break-inside:avoid}
+.weekblok h4{margin:0 0 6px}
+.weekblok .tip{background:var(--l-mint);border-radius:10px;padding:8px 12px;font-size:14px;margin-top:8px}
+.form td.s{width:44px;text-align:center}
+.form td.s span{display:inline-block;width:18px;height:18px;border:1.5px solid var(--tekst);border-radius:4px}
+.tabsk{display:flex;gap:6px;margin:10px 0}
+@media print{.tabsk,.noprint{display:none}.weekblok{page-break-inside:avoid}}
+</style>
+</head>
+<body class="kd-docent">
+<script src="assets/logo.js"></script>
+<script src="assets/kern.js"></script>
+<script src="data/k1499.js"></script><script>window.KD1499 = window.KD;</script>
+<script src="data/k1515.js"></script><script>window.KD1515 = window.KD;</script>
+<div id="kop"></div>
+<div class="wrap" id="wrap"></div>
+<script>
+(function(){
+const esc = AIKD.esc;
+document.getElementById('kop').outerHTML = AIKD.header('Docentenhandleiding','AI-keuzedelen K1499 + K1515','<a class="pil noprint" href="index.html">← Start</a><button class="pil noprint" onclick="print()">🖨 Afdrukken</button>');
+const A = KD1499, B = KD1515;
+
+const weken = (KD, link) => KD.weken.map(w=>`<div class="weekblok"><h4>Week ${w.nr} · ${esc(w.titel)} <span class="tag w">${esc(w.dossier||'')}</span></h4>
+  <div class="tijdlijn">${w.contact.tijdlijn.map(t=>`<div><b>${t[0]}</b><span>${t[1]}</span></div>`).join('')}</div>
+  ${w.contact.stelling?`<p style="margin:8px 0 0"><b>Stelling:</b> "${esc(w.contact.stelling)}"</p>`:''}
+  <p class="hint" style="margin:6px 0 0"><b>Zelfstandig:</b> ${(w.opdrachten||[]).map(o=>esc(o.titel)+' ('+o.uren+' u)').join(' · ')} ${w.oefening?'· oefening: '+(Array.isArray(w.oefening)?w.oefening:[w.oefening]).map(o=>esc(o.titel||o.type)).join(', '):''}</p>
+  ${w.contact.docent?`<div class="tip">💡 ${esc(w.contact.docent)}</div>`:''}
+  <p class="noprint" style="margin:6px 0 0;font-size:13px"><a href="${link}#w${w.nr}">Bekijk studentpagina →</a></p></div>`).join('');
+
+const formulier = (KD) => KD.toetsing.producten.map(p=>`<div class="kaart"><h3 style="margin-top:0">${p.ico} ${esc(p.naam)}</h3><p class="hint">${esc(p.dossier)} · inleveren week ${p.week}</p>
+  <div class="tabelwrap"><table class="tabel form"><tr><th>Gedragscriterium (kwalificatiedossier)</th><th>O</th><th>V</th><th>G</th><th>Toelichting / bewijs</th></tr>
+  ${p.criteria.map(c=>`<tr><td>${esc(c)}</td><td class="s"><span></span></td><td class="s"><span></span></td><td class="s"><span></span></td><td style="min-width:160px"></td></tr>`).join('')}</table></div></div>`).join('')
+  + `<div class="kaart vlak"><h3 style="margin-top:0">Criteriumgericht gesprek: vragenbank</h3><ol>${KD.toetsing.vragen.map(v=>`<li>${esc(v)}</li>`).join('')}</ol><p class="hint">${esc(KD.toetsing.norm)}</p></div>`;
+
+const uren = KD => { const z = KD.weken.reduce((s,w)=>s+(w.urenLeren||0)+(w.opdrachten||[]).reduce((t,o)=>t+o.uren,0),0); return z; };
+
+document.getElementById('wrap').innerHTML = `
+<section class="hero" style="margin-top:0"><div class="grootA">${TERAA_A}</div>
+  <span class="label">Voor docenten en opleidingsmanagers</span><h1>Docentenhandleiding AI-keuzedelen</h1>
+  <p>K1499 <i>Werken met generatieve AI</i> en K1515 <i>Een eigen generatieve AI-oplossing samenstellen</i>: opzet, weekplanning, contactmomenten, toetsing en LLO.</p></section>
+
+<div class="kaart vlak"><b>Inhoud</b><ol class="inhoudsopgave">
+<li><a href="#visie">Visie en opzet</a></li><li><a href="#uren">Weekritme en urenverantwoording</a></li><li><a href="#a">K1499 per week</a></li><li><a href="#b">K1515 per week</a></li>
+<li><a href="#toets">Toetsing en beoordelingsformulieren</a></li><li><a href="#llo">LLO: werkenden en collega's</a></li><li><a href="#modules">Modules voor het reguliere onderwijs</a></li><li><a href="#tools">Tools, privacy en beheer</a></li></ol></div>
+
+<section id="visie"><h2>1. Visie en opzet</h2>
+<p><b>AI hoort in het beroep, niet ernaast.</b> Werken met AI wordt een basisvaardigheid in elk beroep waarvoor we opleiden. Daarom is in beide keuzedelen <b>de eigen beroepspraktijk de rode draad</b>: elke opdracht wordt uitgevoerd in de context van de opleiding of het werk van de deelnemer. De website toont per week een voorbeeld voor ICT, Bouwkunde, Techniek &amp; Technologie, Design en LLO.</p>
+<p>De keuzedelen zijn zo opgebouwd dat ze ook <b>als losse modules</b> in het reguliere onderwijs bruikbaar zijn (zie §7). Zo werkt het keuzedeel ook als opstap naar AI als vast onderdeel van elke opleiding.</p>
+<div class="tabelwrap"><table class="tabel"><tr><th></th><th>K1499 – Werken met generatieve AI</th><th>K1515 – Eigen AI-oplossing samenstellen</th></tr>
+<tr><td>Rol</td><td>AI-gebruiker</td><td>AI-bouwer</td></tr>
+<tr><td>Doelgroep (dossier)</td><td>werkenden met weinig AI-ervaring, alle sectoren</td><td>werkenden niveau 3/4 met basiskennis generatieve AI</td></tr>
+<tr><td>Werkprocessen</td><td>W1 kiest AI-tool(s) · W2 zet AI-tools in</td><td>W1 stelt AI-oplossing samen · W2 evalueert en verbetert</td></tr>
+<tr><td>Fasen</td><td>${A.fases.map(f=>esc(f.naam)).join(' · ')}</td><td>${B.fases.map(f=>esc(f.naam)).join(' · ')}</td></tr>
+<tr><td>Beroepsproducten</td><td>BP1 Tooladvies (wk 8) · BP2 Praktijkopdracht (wk 16)</td><td>BP1 Samengestelde AI-oplossing (wk 11) · BP2 Evaluatie + advies (wk 16)</td></tr>
+<tr><td>Volgorde</td><td colspan="2">Na elkaar: K1499 (bijv. semester 1), daarna K1515 (semester 2). Instromen in K1515 zonder K1499 kan na een intake (week 1 van K1515), eventueel met K1499 week 2, 3, 4 en 9 als voorbereidende stof.</td></tr></table></div>
+<p class="hint">Kanttekening bij het dossier van K1515: daar staat "wet- en regelgeving zoals de AIGP". AIGP is een certificering (IAPP, AI Governance Professional), geen wet. In het lesmateriaal is de EU AI Act de wettelijke basis en wordt AIGP uitgelegd als mogelijke vervolgcertificering.</p></section>
+
+<section id="uren"><h2>2. Weekritme en urenverantwoording</h2>
+<div class="kaart"><h3 style="margin-top:0">Contactmoment (3 uur, vast ritme)</h3>
+<div class="tijdlijn"><div><b>0:00–0:20</b><span><b>AI-nieuws van de week</b>: deelnemers brengen om de beurt een actueel item in. Zo blijft het materiaal actueel.</span></div><div><b>0:20–1:20</b><span><b>Uitleg en live demo</b>: kern van de week, altijd met een demo in een AI-tool.</span></div><div><b>1:20–2:30</b><span><b>Werken met begeleiding</b>: oefening of beroepsproduct, de docent loopt rond en geeft feedback.</span></div><div><b>2:30–3:00</b><span><b>Discussie en reflectie</b>: de stelling van de week (deelnemers kiezen vooraf hun positie op de site).</span></div></div></div>
+<div class="tabelwrap"><table class="tabel"><tr><th></th><th>Contact</th><th>Zelfstandig op de site (leren + opdrachten)</th><th>Toetsing, buffer, BPV-afstemming</th><th>Totaal</th></tr>
+<tr><td>K1499</td><td>18 × 3 = 54 u</td><td>${uren(A)} u</td><td>${240-54-uren(A)} u</td><td>240 SBU</td></tr>
+<tr><td>K1515</td><td>18 × 3 = 54 u</td><td>${uren(B)} u</td><td>${240-54-uren(B)} u</td><td>240 SBU</td></tr></table></div>
+<p class="hint">De urentelling komt rechtstreeks uit de weekdata (data/k1499.js en data/k1515.js) en past zich aan als je daar uren wijzigt.</p></section>
+
+<section id="a"><h2>3. K1499 – contactmomenten per week</h2>${weken(A,'k1499.html')}</section>
+<section id="b"><h2>4. K1515 – contactmomenten per week</h2>${weken(B,'k1515.html')}</section>
+
+<section id="toets"><h2>5. Toetsing en beoordelingsformulieren</h2>
+<p>Per keuzedeel twee beroepsproducten (één per werkproces) en een criteriumgericht gesprek. De criteria zijn letterlijk de gedragscriteria uit het kwalificatiedossier. Het <b>logboek</b> dat deelnemers exporteren (prompts, iteraties, factchecks, testsets, configuratie) is het procesbewijs. <i>Dit is een voorstel. Het definitieve examenplan, de cesuur en de vaststelling liggen bij de examencommissie.</i></p>
+<div class="tabsk"><button class="chip aan" data-t="ta">K1499</button><button class="chip" data-t="tb">K1515</button></div>
+<div id="ta">${formulier(A)}</div><div id="tb" hidden>${formulier(B)}</div></section>
+
+<section id="llo"><h2>6. LLO: werkenden, collega's en externen</h2>
+<div class="kaart"><ul>
+<li><b>Certificaat</b>: beide keuzedelen hebben een certificaat (ingangsdatum 01-05-2026) en kunnen onder voorwaarden in de derde leerweg worden aangeboden.</li>
+<li><b>Contactmoment</b>: eventueel als avondvariant (bijv. 18:30–21:30) of hybride. Het weekritme blijft gelijk.</li>
+<li><b>Eigen werk = BPV</b>: de "beroepspraktijk" is de eigen werkplek. Het afstemmingsgesprek voert de deelnemer met de eigen leidinggevende of een collega.</li>
+<li><b>Docenten van andere teams</b>: profiel "LLO" kiezen. Een interessante variant is als praktijkopdracht een AI-onderdeel ontwerpen voor de eigen les (K1499) of een assistent voor het eigen vak bouwen (K1515). Zo komt AI direct in het reguliere onderwijs terecht.</li>
+<li><b>Vrijstelling/instroom</b>: ervaren deelnemers kunnen K1499 week 1–4 versneld doorlopen (de check per week laat zien of de kennis er is). Instromen in K1515 gaat via de intake.</li>
+<li><b>Tools</b>: werkenden gebruiken de tools die hun eigen organisatie toestaat. Dat is meteen een knock-outcriterium in het tooladvies.</li>
+</ul></div></section>
+
+<section id="modules"><h2>7. Modules voor het reguliere onderwijs</h2>
+<p>Deze weken werken ook los, als les of mini-module in een reguliere opleiding (alle stof en oefeningen staan open op de site):</p>
+<div class="tabelwrap"><table class="tabel"><tr><th>Module</th><th>Weken</th><th>Past bij</th></tr>
+<tr><td>Hoe werkt AI? (tokens, hallucinaties)</td><td><a href="k1499.html#w2">K1499 wk 2</a> + <a href="k1499.html#w3">3</a></td><td>elke opleiding, leerjaar 1</td></tr>
+<tr><td>Veilig en verantwoord AI-gebruik (privacy, stoplicht)</td><td><a href="k1499.html#w4">K1499 wk 4</a></td><td>elke opleiding, vóór de eerste BPV</td></tr>
+<tr><td>Prompten in je vak</td><td><a href="k1499.html#w9">K1499 wk 9</a> + <a href="k1499.html#w10">10</a></td><td>elke opleiding</td></tr>
+<tr><td>Bronnen checken en factchecken</td><td><a href="k1499.html#w11">K1499 wk 11</a></td><td>burgerschap, Nederlands, vakken met onderzoek</td></tr>
+<tr><td>Beeld genereren in je vak</td><td><a href="k1499.html#w12">K1499 wk 12</a></td><td>Design, Bouwkunde</td></tr>
+<tr><td>Bias en AI Act</td><td><a href="k1499.html#w13">K1499 wk 13</a> + <a href="k1499.html#w14">14</a></td><td>burgerschap, loopbaan</td></tr>
+<tr><td>Een eigen assistent bouwen</td><td><a href="k1515.html#w6">K1515 wk 6</a> + <a href="k1515.html#w8">8</a></td><td>ICT, en elke opleiding met een projectopdracht</td></tr>
+<tr><td>Hoe leert een neuraal netwerk?</td><td><a href="k1515.html#w2">K1515 wk 2</a></td><td>ICT, Techniek &amp; Technologie</td></tr>
+<tr><td>AI testen en evalueren</td><td><a href="k1515.html#w12">K1515 wk 12</a></td><td>ICT (testen), kwaliteitszorg</td></tr></table></div></section>
+
+<section id="tools"><h2>8. Tools, privacy en beheer</h2>
+<div class="kaart"><ul>
+<li><b>Basis</b>: Microsoft Copilot met het schoolaccount (gegevensbescherming). Daarnaast ChatGPT, Claude en Gemini in de gratis versie. Opdrachten met <span class="tag pro">PRO</span> zijn optioneel voor deelnemers met een betaalde versie.</li>
+<li><b>Leeftijd</b>: minimumleeftijden verschillen per tool (claude.ai is 18+). Laat minderjarige studenten tools gebruiken die voor hun leeftijd zijn toegestaan, en standaard Copilot met het schoolaccount.</li>
+<li><b>Privacy van de site</b>: alle antwoorden blijven in de browser van de deelnemer (localStorage). Er gaat niets naar een server. Deelnemers exporteren hun logboek (.md of PDF) en leveren dat in via de leeromgeving. Wisselen ze van apparaat of wissen ze hun browsergegevens, dan zijn de antwoorden weg: wijs daar in week 1 op.</li>
+<li><b>Actualiteit</b>: tool-informatie (week 5 K1499, week 8 K1515) is de stand van november 2026. Controleer die elk semester. Dat is meteen een mooie opdracht voor deelnemers ("klopt de tool-landkaart nog?").</li>
+<li><b>Inhoud aanpassen</b>: alle weekinhoud staat in <code>data/k1499.js</code> en <code>data/k1515.js</code> (één object per week: doelen, contactmoment, uitleg, oefening, opdrachten, contextvoorbeelden, quiz). Aanpassen kan direct in GitHub. Er is geen build-stap nodig.</li>
+</ul></div></section>`;
+
+document.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{ document.querySelectorAll('[data-t]').forEach(x=>x.classList.toggle('aan',x===b)); document.getElementById('ta').hidden = b.dataset.t!=='ta'; document.getElementById('tb').hidden = b.dataset.t!=='tb'; });
+})();
+</script>
+</body>
+</html>
