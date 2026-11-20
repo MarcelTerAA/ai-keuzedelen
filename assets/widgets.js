@@ -311,7 +311,7 @@ W.perceptron = (el, cfg, ctx) => {
     <div>
     <div class="knoppen" style="margin-top:0"><button class="knop klein" id="s1">Leer van 1 punt</button><button class="knop klein" id="e1">Train 1 epoch</button><button class="knop klein" id="e10">Train 20 epochs</button></div>
     <label class="veld">Leersnelheid (learning rate): <b id="lrl">${lr}</b><input type="range" min="0.01" max="1" step="0.01" value="${lr}" id="lr"></label>
-    <p style="font-size:14px;margin:6px 0">Zelf een punt toevoegen: kies de groep en klik in het vlak.</p>
+    <p style="font-size:14px;margin:6px 0">Zelf een punt toevoegen: kies de groep en klik in het vlak. Let op: elke klik in het vlak voegt een punt toe, en je punten blijven bewaard. Een nieuw proefje begint weer met de 10 oorspronkelijke punten.</p>
     <div><button class="chip aan" data-k="1">🟠 oranje</button><button class="chip" data-k="0">🟣 paars</button></div>
     <div class="knoppen"><button class="knop klein rand" id="lastig">Voeg lastig punt toe</button><button class="knop klein rand" id="rs">Reset gewichten</button><button class="knop klein rand" id="rp">Punten terugzetten</button></div>
     <div class="uitvoer" id="inf"></div>
@@ -342,8 +342,9 @@ W.perceptron = (el, cfg, ctx) => {
     lijn();
     pts.forEach((p,i)=>{ g.beginPath(); g.arc(p[0],p[1],7,0,7); g.fillStyle = p[2]?'#EFA242':'#9447F0'; g.fill(); g.lineWidth=2; g.strokeStyle = voorspel(p[0],p[1])===p[2]?'#fff':'#1E2426'; g.stroke();
       if(i===actief){ g.beginPath(); g.arc(p[0],p[1],12,0,7); g.lineWidth=3; g.strokeStyle='#1E2426'; g.stroke(); } });
-    const goed = pts.filter(p=>voorspel(p[0],p[1])===p[2]).length, pct = pts.length?Math.round(goed/pts.length*100):0;
-    el.querySelector('#inf').innerHTML = `<b>Epoch ${epoch}</b> · nauwkeurigheid <b>${pct}%</b> (${goed} van ${pts.length} goed)\nGewichten: w1 = ${f2(w[0])} · w2 = ${f2(w[1])} · bias = ${f2(w[2])}`;
+    const goed = pts.filter(p=>voorspel(p[0],p[1])===p[2]).length, pct = pts.length?Math.round(goed/pts.length*100):0, extra = pts.length-START_PTS.length;
+    el.querySelector('#inf').innerHTML = `<b>Epoch ${epoch}</b> · nauwkeurigheid <b>${pct}%</b> (${goed} van ${pts.length} goed)\nGewichten: w1 = ${f2(w[0])} · w2 = ${f2(w[1])} · bias = ${f2(w[2])}${extra>0?`
+⚠️ Je hebt ${extra} extra punt${extra>1?'en':''} toegevoegd. Lukt 100% niet meer? Klik op "Punten terugzetten".`:''}`;
     ctx.set({pts}); ctx.log(cfg.titel, `Na ${epoch} epochs: ${pct}% nauwkeurig, learning rate ${lr}.`);
   };
   const leer = p => { const fout = p[2]-voorspel(p[0],p[1]); w[0]+=lr*fout*p[0]/B; w[1]+=lr*fout*p[1]/B; w[2]+=lr*fout; return fout; };
@@ -363,7 +364,7 @@ W.perceptron = (el, cfg, ctx) => {
   };
   cv.onclick = e => { const r = cv.getBoundingClientRect(); pts.push([(e.clientX-r.left)*B/r.width,(e.clientY-r.top)*B/r.height,klasse]); teken(); };
   el.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{ klasse=+b.dataset.k; el.querySelectorAll('[data-k]').forEach(x=>x.classList.toggle('aan',x===b)); });
-  el.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{ proef=+b.dataset.p; PROEVEN[proef].klaar(); actief=-1; el.querySelector('#stap').textContent=''; toonProef(); teken(); });
+  el.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{ proef=+b.dataset.p; PROEVEN[proef].klaar(); pts = START_PTS.map(p=>p.slice()); actief=-1; el.querySelector('#stap').textContent='Proefje gestart: de 10 oorspronkelijke punten en de startlijn staan klaar.'; toonProef(); teken(); });
   el.querySelector('#lr').oninput = e => { lr=+e.target.value; el.querySelector('#lrl').textContent=lr; };
   el.querySelector('#s1').onclick = stap;
   el.querySelector('#e1').onclick = ()=>train(1);
