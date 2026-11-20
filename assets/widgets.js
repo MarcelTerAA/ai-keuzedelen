@@ -278,32 +278,101 @@ W.sus = (el, cfg, ctx) => {
 
 /* ---------- perceptron: train een mini-neuron op punten ---------- */
 W.perceptron = (el, cfg, ctx) => {
-  const B = 300; let pts = (ctx.get()||{}).pts || [[60,70,1],[90,50,1],[80,110,1],[120,80,1],[220,230,0],[240,190,0],[200,250,0],[250,240,0],[170,200,0],[110,130,1]];
-  let w = [0,0,0], epoch = 0, klasse = 1, lr = 0.1;
-  el.innerHTML = kop(cfg) + `<div class="rij" style="align-items:flex-start"><canvas width="${B}" height="${B}" style="border:1.5px solid var(--lijn);border-radius:14px;max-width:100%;cursor:crosshair;flex:0 0 auto" id="cv"></canvas>
-    <div><p style="font-size:14px">Klik in het vlak om punten toe te voegen. Het neuron leert een lijn te trekken die de twee groepen scheidt.</p>
-    <div><button class="chip aan" data-k="1">🟠 groep A</button><button class="chip" data-k="0">🟣 groep B</button></div>
+  const B = 300;
+  const START_PTS = [[60,70,1],[90,50,1],[80,110,1],[120,80,1],[110,130,1],[220,230,0],[240,190,0],[200,250,0],[250,240,0],[170,200,0]];
+  const START_W = [-1, 1, 0];               /* bewust een slechte startlijn (diagonaal door beide groepen) */
+  let pts = ((ctx.get()||{}).pts || START_PTS).map(p=>p.slice());
+  let w = START_W.slice(), epoch = 0, klasse = 1, lr = 0.3, cursor = 0, actief = -1, proef = 0;
+  const NAAM = k => k ? '🟠 oranje' : '🟣 paars';
+  const f2 = v => v.toFixed(2).replace('.',',');
+  const PROEVEN = [
+    {t:'1. Kijk eerst', doe:'Train nog niets. Bekijk het vlak en de getallen rechts.',
+     zie:'De stippellijn is de grens die het neuron nu "denkt". Hij begint expres verkeerd: schuin dwars door beide groepen. Ongeveer de helft van de punten heeft een zwarte rand: die voorspelt het neuron fout.',
+     waarom:'Een neuron begint zonder kennis. De gewichten (w1, w2, bias) bepalen waar de lijn ligt. Leren = die drie getallen zó aanpassen dat de lijn de groepen scheidt.', klaar:()=>{ w=START_W.slice(); epoch=0; cursor=0; }},
+    {t:'2. Stap voor stap', doe:'Klik een paar keer op "Leer van 1 punt". Lees telkens de berekening rechts.',
+     zie:'Steeds wordt één punt (met dikke ring) bekeken. Voorspelt het neuron goed, dan verandert er niets. Voorspelt het fout, dan veranderen de gewichten een beetje en schuift de lijn op, richting een betere scheiding.',
+     waarom:'Dit is de kern van elk neuraal netwerk: voorspellen → fout bepalen → gewichten een klein stapje bijstellen. Alleen fouten leveren een correctie op.', klaar:()=>{ w=START_W.slice(); epoch=0; cursor=0; }},
+    {t:'3. Train tot 100%', doe:'Klik op "Train 1 epoch" tot de nauwkeurigheid 100% is. Eén epoch = alle punten één keer bekeken.',
+     zie:'Na ongeveer 3 tot 6 epochs scheidt de lijn de oranje en paarse punten. Er zijn geen zwarte randen meer; de achtergrondkleur klopt overal met de punten.',
+     waarom:'Het neuron heeft uit voorbeelden mét label (supervised learning) een regel gevonden. Klik nu een nieuw punt linksboven als oranje: het neuron voorspelt het meteen goed. Dat is generaliseren.', klaar:()=>{ w=START_W.slice(); epoch=0; cursor=0; }},
+    {t:'4. Een lastig punt', doe:'Klik op "Voeg lastig punt toe" (een oranje punt midden tussen de paarse) en train een paar keer 20 epochs.',
+     zie:'De nauwkeurigheid komt niet meer op 100%. De lijn blijft heen en weer springen, en er blijft minstens één punt met een zwarte rand.',
+     waarom:'Eén neuron kan alleen een rechte lijn trekken. Past de data daar niet in, dan heb je meer neuronen en lagen nodig: dat is deep learning. Of het punt is een fout in je data (verkeerd label). Datakwaliteit doet ertoe! Klik daarna op "Punten terugzetten".', klaar:()=>{ w=START_W.slice(); epoch=0; cursor=0; }},
+    {t:'5. Learning rate', doe:'Zet de learning rate op 0,01 en train 1 epoch. Reset de gewichten, zet hem op 1 en train opnieuw 1 epoch.',
+     zie:'Bij 0,01 schuift de lijn nauwelijks: je hebt veel epochs nodig. Bij 1 maakt de lijn grote sprongen en kan hij voorbij het goede punt schieten.',
+     waarom:'De learning rate is de stapgrootte van het bijstellen. Te klein = traag leren, te groot = onrustig en springerig. Bij echte modellen zoek je een tussenwaarde. Zet hem daarna terug op 0,3.', klaar:()=>{ w=START_W.slice(); epoch=0; cursor=0; }}
+  ];
+  el.innerHTML = kop(cfg) + `
+    <div class="kader" style="margin:0 0 12px"><b>Wat zie je?</b> Elk punt is een trainingsvoorbeeld met een juist antwoord (een label): <b>🟠 oranje</b> of <b>🟣 paars</b>. Denk bijvoorbeeld aan "goedgekeurd" of "afgekeurd" product, met twee metingen als x en y.
+      Het neuron moet leren welk label bij welke plek hoort. De <b>achtergrondkleur</b> laat zien wat het neuron op elke plek voorspelt. De <b>stippellijn</b> is de grens die het geleerd heeft. Punten met een <b>zwarte rand</b> voorspelt het nog fout.</div>
+    <div class="chips" id="prv">${PROEVEN.map((p,i)=>`<button class="chip ${i===proef?'aan':''}" data-p="${i}">${p.t}</button>`).join('')}</div>
+    <div class="kaart vlak" id="proef" style="margin:8px 0 12px"></div>
+    <div class="rij" style="align-items:flex-start"><canvas width="${B}" height="${B}" style="border:1.5px solid var(--lijn);border-radius:14px;max-width:100%;cursor:crosshair;flex:0 0 auto" id="cv"></canvas>
+    <div>
+    <div class="knoppen" style="margin-top:0"><button class="knop klein" id="s1">Leer van 1 punt</button><button class="knop klein" id="e1">Train 1 epoch</button><button class="knop klein" id="e10">Train 20 epochs</button></div>
     <label class="veld">Leersnelheid (learning rate): <b id="lrl">${lr}</b><input type="range" min="0.01" max="1" step="0.01" value="${lr}" id="lr"></label>
-    <div class="knoppen"><button class="knop klein" id="e1">Train 1 epoch</button><button class="knop klein" id="e10">Train 20 epochs</button><button class="knop klein rand" id="rs">Reset gewichten</button></div>
-    <div class="uitvoer" id="inf"></div></div></div>`;
+    <p style="font-size:14px;margin:6px 0">Zelf een punt toevoegen: kies de groep en klik in het vlak.</p>
+    <div><button class="chip aan" data-k="1">🟠 oranje</button><button class="chip" data-k="0">🟣 paars</button></div>
+    <div class="knoppen"><button class="knop klein rand" id="lastig">Voeg lastig punt toe</button><button class="knop klein rand" id="rs">Reset gewichten</button><button class="knop klein rand" id="rp">Punten terugzetten</button></div>
+    <div class="uitvoer" id="inf"></div>
+    <div class="uitvoer" id="stap" style="margin-top:8px"></div></div></div>
+    <details style="margin-top:10px"><summary><b>Hoe rekent het neuron?</b></summary>
+      <p style="font-size:14.5px">Voor een punt met plek <i>x</i> en <i>y</i> (allebei tussen 0 en 1) rekent het neuron een <b>score</b> uit:<br><code>score = w1 × x + w2 × y + bias</code><br>
+      Is de score 0 of hoger, dan voorspelt het 🟠 oranje, anders 🟣 paars. Alle plekken waar de score precies 0 is, vormen samen de stippellijn.</p>
+      <p style="font-size:14.5px">Bij een <b>fout</b> past het neuron de gewichten aan: <code>nieuw gewicht = oud gewicht + learning rate × fout × invoer</code>. De fout is +1 als het oranje had moeten zijn, −1 als het paars had moeten zijn. Zo schuift de lijn steeds een stukje in de goede richting. Dit heet de <i>perceptron-regel</i>, de eenvoudigste vorm van wat elk groot neuraal netwerk doet.</p></details>`;
   const cv = el.querySelector('#cv'), g = cv.getContext('2d');
-  const voorspel = (x,y) => (w[0]*(x/B) + w[1]*(y/B) + w[2]) >= 0 ? 1 : 0;
+  const score = (x,y) => w[0]*(x/B) + w[1]*(y/B) + w[2];
+  const voorspel = (x,y) => score(x,y) >= 0 ? 1 : 0;
+  const lijn = () => {   /* w0*x + w1*y + w2 = 0, x/y genormaliseerd */
+    const P = [];
+    if(Math.abs(w[1])>1e-9){ [0,1].forEach(x=>P.push([x, -(w[0]*x+w[2])/w[1]])); }
+    else if(Math.abs(w[0])>1e-9){ [0,1].forEach(y=>P.push([-(w[2])/w[0], y])); }
+    if(P.length<2) return;
+    g.save(); g.setLineDash([7,5]); g.lineWidth=2.5; g.strokeStyle='#1E2426';
+    g.beginPath(); g.moveTo(P[0][0]*B,P[0][1]*B); g.lineTo(P[1][0]*B,P[1][1]*B); g.stroke(); g.restore();
+  };
+  const toonProef = () => {
+    const p = PROEVEN[proef];
+    el.querySelector('#proef').innerHTML = `<p style="margin:0 0 6px"><b>Doe:</b> ${p.doe}</p><p style="margin:0 0 6px"><b>Wat je zou moeten zien:</b> ${p.zie}</p><p style="margin:0"><b>Waarom:</b> ${p.waarom}</p>`;
+    el.querySelectorAll('[data-p]').forEach(b=>b.classList.toggle('aan', +b.dataset.p===proef));
+  };
   const teken = () => {
     g.clearRect(0,0,B,B);
-    for(let x=0;x<B;x+=10) for(let y=0;y<B;y+=10){ g.fillStyle = voorspel(x+5,y+5) ? 'rgba(239,162,66,.13)' : 'rgba(148,71,240,.10)'; g.fillRect(x,y,10,10); }
-    pts.forEach(p=>{ g.beginPath(); g.arc(p[0],p[1],7,0,7); g.fillStyle = p[2]?'#EFA242':'#9447F0'; g.fill(); g.lineWidth=2; g.strokeStyle = voorspel(p[0],p[1])===p[2]?'#fff':'#1E2426'; g.stroke(); });
-    const goed = pts.filter(p=>voorspel(p[0],p[1])===p[2]).length;
-    el.querySelector('#inf').textContent = `Epoch ${epoch} · nauwkeurigheid ${pts.length?Math.round(goed/pts.length*100):0}% (${goed}/${pts.length})\nGewichten: w1=${w[0].toFixed(2)}, w2=${w[1].toFixed(2)}, bias=${w[2].toFixed(2)}\nZwart omrande punten worden nog fout voorspeld.`;
-    ctx.set({pts}); ctx.log(cfg.titel, `Na ${epoch} epochs: ${pts.length?Math.round(goed/pts.length*100):0}% nauwkeurig, learning rate ${lr}.`);
+    for(let x=0;x<B;x+=10) for(let y=0;y<B;y+=10){ g.fillStyle = voorspel(x+5,y+5) ? 'rgba(239,162,66,.16)' : 'rgba(148,71,240,.12)'; g.fillRect(x,y,10,10); }
+    lijn();
+    pts.forEach((p,i)=>{ g.beginPath(); g.arc(p[0],p[1],7,0,7); g.fillStyle = p[2]?'#EFA242':'#9447F0'; g.fill(); g.lineWidth=2; g.strokeStyle = voorspel(p[0],p[1])===p[2]?'#fff':'#1E2426'; g.stroke();
+      if(i===actief){ g.beginPath(); g.arc(p[0],p[1],12,0,7); g.lineWidth=3; g.strokeStyle='#1E2426'; g.stroke(); } });
+    const goed = pts.filter(p=>voorspel(p[0],p[1])===p[2]).length, pct = pts.length?Math.round(goed/pts.length*100):0;
+    el.querySelector('#inf').innerHTML = `<b>Epoch ${epoch}</b> · nauwkeurigheid <b>${pct}%</b> (${goed} van ${pts.length} goed)\nGewichten: w1 = ${f2(w[0])} · w2 = ${f2(w[1])} · bias = ${f2(w[2])}`;
+    ctx.set({pts}); ctx.log(cfg.titel, `Na ${epoch} epochs: ${pct}% nauwkeurig, learning rate ${lr}.`);
   };
-  const train = n => { for(let e=0;e<n;e++){ shuffle(pts).forEach(p=>{ const fout = p[2]-voorspel(p[0],p[1]); w[0]+=lr*fout*p[0]/B; w[1]+=lr*fout*p[1]/B; w[2]+=lr*fout; }); epoch++; } teken(); };
+  const leer = p => { const fout = p[2]-voorspel(p[0],p[1]); w[0]+=lr*fout*p[0]/B; w[1]+=lr*fout*p[1]/B; w[2]+=lr*fout; return fout; };
+  const train = n => { for(let e=0;e<n;e++){ shuffle(pts).forEach(leer); epoch++; } actief=-1; cursor=0;
+    el.querySelector('#stap').textContent = `${n} epoch(s) getraind: elk punt ${n}× bekeken. Bekijk hoe de lijn en de gewichten veranderd zijn.`; teken(); };
+  const stap = () => {
+    if(!pts.length) return;
+    const i = cursor % pts.length, p = pts[i], x = p[0]/B, y = p[1]/B, s = score(p[0],p[1]), vs = s>=0?1:0, oud = w.slice();
+    const fout = leer(p); actief = i; cursor++; if(cursor % pts.length === 0) epoch++;
+    el.querySelector('#stap').textContent =
+      `Punt ${i+1} (x = ${f2(x)}, y = ${f2(y)}), juist antwoord: ${NAAM(p[2])}\n`+
+      `score = ${f2(oud[0])} × ${f2(x)} + ${f2(oud[1])} × ${f2(y)} + ${f2(oud[2])} = ${f2(s)}  →  voorspelling: ${NAAM(vs)}\n`+
+      (fout===0 ? `✅ Goed voorspeld: de gewichten blijven gelijk.`
+                : `❌ Fout (fout = ${fout>0?'+1':'−1'}). Bijstellen met learning rate ${lr}:\n`+
+                  `w1: ${f2(oud[0])} → ${f2(w[0])} · w2: ${f2(oud[1])} → ${f2(w[1])} · bias: ${f2(oud[2])} → ${f2(w[2])}\nDe lijn schuift op richting dit punt.`);
+    teken();
+  };
   cv.onclick = e => { const r = cv.getBoundingClientRect(); pts.push([(e.clientX-r.left)*B/r.width,(e.clientY-r.top)*B/r.height,klasse]); teken(); };
   el.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{ klasse=+b.dataset.k; el.querySelectorAll('[data-k]').forEach(x=>x.classList.toggle('aan',x===b)); });
+  el.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{ proef=+b.dataset.p; PROEVEN[proef].klaar(); actief=-1; el.querySelector('#stap').textContent=''; toonProef(); teken(); });
   el.querySelector('#lr').oninput = e => { lr=+e.target.value; el.querySelector('#lrl').textContent=lr; };
+  el.querySelector('#s1').onclick = stap;
   el.querySelector('#e1').onclick = ()=>train(1);
   el.querySelector('#e10').onclick = ()=>train(20);
-  el.querySelector('#rs').onclick = ()=>{ w=[0,0,0]; epoch=0; teken(); };
-  teken();
+  el.querySelector('#lastig').onclick = ()=>{ pts.push([225,215,1]); actief=pts.length-1; el.querySelector('#stap').textContent='Lastig punt toegevoegd: oranje, midden tussen de paarse punten (dikke ring).'; teken(); };
+  el.querySelector('#rs').onclick = ()=>{ w=START_W.slice(); epoch=0; cursor=0; actief=-1; el.querySelector('#stap').textContent='Gewichten teruggezet naar de (verkeerde) startlijn.'; teken(); };
+  el.querySelector('#rp').onclick = ()=>{ pts = START_PTS.map(p=>p.slice()); actief=-1; el.querySelector('#stap').textContent='De oorspronkelijke 10 punten staan er weer.'; teken(); };
+  toonProef(); teken();
+  el.querySelector('#stap').textContent = 'Hier verschijnt de berekening als je op "Leer van 1 punt" klikt.';
 };
 
 /* ---------- info: statische kaart (bijv. stappenplan per platform) met tabs ---------- */
