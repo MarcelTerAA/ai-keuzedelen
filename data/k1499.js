@@ -51,10 +51,10 @@ Waar in de opdrachten "stagebedrijf" of "werkgever" staat, lees je dan: je oplei
    pro:'Gebruik je betaalde versie en de gratis versie van dezelfde tool naast elkaar. Merk je verschil in kwaliteit, snelheid of mogelijkheden (bijvoorbeeld bestanden uploaden of op het web zoeken)?'}
  ],
  context:{ict:'Een servicedesk-medewerker die AI gebruikt om een storingsmelding samen te vatten en een eerste antwoord aan de gebruiker op te stellen.',bouw:'Een werkvoorbereider die AI een bestek laat samenvatten of een planning-opzet laat maken voor een renovatie.',tt:'Een monteur die AI vraagt een foutcode van een PLC te verklaren of een onderhoudsinstructie te vereenvoudigen.',design:'Een mediavormgever die AI gebruikt voor moodboards, tekstvarianten voor een campagne of een eerste schets.',llo:'Een docent die AI laat helpen bij het maken van oefenvragen, of een kantoormedewerker die notulen laat samenvatten.'},
- quiz:[{v:'Wat is het belangrijkste verschil tussen generatieve AI en andere AI?',o:['Generatieve AI is altijd online','Generatieve AI maakt nieuwe content','Generatieve AI gebruikt geen data','Generatieve AI maakt nooit fouten'],g:1,u:'Generatief = genereren = iets nieuws maken (tekst, beeld, geluid, code).'},
-  {v:'Wat betekent "vooraf getraind"?',o:['Jij moet het model eerst trainen','Het model is al getraind door de maker; jij gebruikt het','Het model kan niet meer leren van jouw prompts','Het model werkt alleen offline'],g:1,u:'Je gebruikt een bestaand model. Zelf samenstellen en trainen komt in K1515.'},
-  {v:'Sinds wanneer verplicht de AI Act organisaties om te zorgen voor AI-geletterdheid?',o:['2023','februari 2025','2030','Dat verplicht de AI Act niet'],g:1,u:'Artikel 4 AI Act geldt sinds 2 februari 2025.'},
-  {v:'Wie is verantwoordelijk voor een fout in een tekst die je met AI hebt gemaakt en hebt verstuurd?',o:['De maker van de AI-tool','Niemand','Jij (en je werkgever)','De AI zelf'],g:2,u:'Jij gebruikt en verstuurt het, dus jij blijft verantwoordelijk.'}],
+ quiz:[{v:'Wat is het belangrijkste verschil tussen generatieve AI en andere AI?',o:['Generatieve AI werkt altijd online, andere AI ook offline','Generatieve AI maakt nieuwe content, zoals tekst of beeld','Generatieve AI leert niet van data, maar van regels','Generatieve AI geeft altijd hetzelfde antwoord op een vraag'],g:1,u:'Generatief = genereren = iets nieuws maken (tekst, beeld, geluid, code).'},
+  {v:'Wat betekent "vooraf getraind"?',o:['Je moet het model eerst zelf trainen met je eigen data','Het model is al getraind door de maker; jij gebruikt het','Het model is getraind op de vragen van eerdere gebruikers','Het model leert tijdens elk gesprek blijvend van jouw prompts'],g:1,u:'Je gebruikt een bestaand model. Zelf samenstellen en trainen komt in K1515.'},
+  {v:'Sinds wanneer verplicht de AI Act organisaties om te zorgen voor AI-geletterdheid?',o:['Sinds 2023','Sinds februari 2025','Pas vanaf 2027','Dat verplicht de AI Act niet'],g:1,u:'Artikel 4 AI Act geldt sinds 2 februari 2025.'},
+  {v:'Wie is verantwoordelijk voor een fout in een tekst die je met AI hebt gemaakt en hebt verstuurd?',o:['De maker van de AI-tool, want die heeft het model gemaakt','Niemand, want een AI-fout is niet te voorkomen','Jij, en je werkgever of opdrachtgever die het gebruikt','De ontvanger, die had het moeten controleren'],g:2,u:'Jij gebruikt en verstuurt het, dus jij blijft verantwoordelijk.'}],
  reflectie:'Wat verwacht je van AI in jouw beroep: kans, bedreiging of allebei? Waarom?'},
 
 {nr:2, fase:'Begrijpen', titel:'Hoe werkt het? Data, modellen en tokens', dossier:'vakkennis', urenLeren:4,
@@ -91,10 +91,10 @@ Waar in de opdrachten "stagebedrijf" of "werkgever" staat, lees je dan: je oplei
   {id:'c', titel:'Waar zit AI in mijn vakgereedschap?', uren:2, tekst:'<p>Zoek uit welke software in jouw vak al AI-functies heeft (bijv. CAD-, ontwerp-, ontwikkel-, kantoor- of onderhoudssoftware). Noem er minimaal 3 en zeg per stuk: herkent het (andere AI) of maakt het iets nieuws (generatief)?</p>', invoer:'Software – AI-functie – herkennend of generatief'}
  ],
  context:{ict:'Denk aan GitHub Copilot in je code-editor, AI in Microsoft 365, AI-samenvattingen in ticketsystemen.',bouw:'Denk aan AI in BIM- en CAD-software (Revit, Archicad), automatische hoeveelheden-uittrekken, AI-render-tools.',tt:'Denk aan voorspellend onderhoud, beeldinspectie in productie, AI-assistenten in PLC- of CAD-software.',design:'Denk aan generatieve vulling in Photoshop, Adobe Firefly, Canva Magic, AI in Figma.',llo:'Denk aan Copilot in Word/Outlook/Teams, AI-functies in je leer- of administratiesysteem.'},
- quiz:[{v:'Wat doet een taalmodel eigenlijk bij elke stap?',o:['Het zoekt het antwoord op internet op','Het voorspelt het volgende token','Het kopieert een zin uit de trainingsdata','Het denkt na zoals een mens'],g:1,u:'Een LLM voorspelt steeds het meest passende volgende token.'},
-  {v:'Wat gebeurt er bij een hoge temperature?',o:['Antwoorden worden korter','Het model gebruikt meer bronnen','Er komt meer variatie (en meer kans op onzin)','Het model wordt nauwkeuriger'],g:2,u:'Hoge temperature betekent dat ook minder waarschijnlijke woorden gekozen worden.'},
-  {v:'Een helmdetector op de bouwplaats is een voorbeeld van…',o:['beeldgeneratie','beeldherkenning','een taalmodel','geen AI'],g:1,u:'Het herkent iets op een beeld en maakt niets nieuws.'},
-  {v:'Waarom kan een taalmodel overtuigend fout zijn?',o:['Omdat het liegt','Omdat het kiest wat waarschijnlijk klinkt, niet wat waar is','Omdat het internet fout is','Dat kan niet'],g:1,u:'Waarschijnlijk ≠ waar. Daarom moet je altijd controleren.'}],
+ quiz:[{v:'Wat doet een taalmodel eigenlijk bij elke stap?',o:['Het zoekt het antwoord op internet en vat het samen','Het voorspelt telkens het waarschijnlijkste volgende token','Het kiest een passend antwoord uit een database met teksten','Het controleert eerst de feiten en schrijft dan een antwoord'],g:1,u:'Een LLM voorspelt steeds het meest passende volgende token.'},
+  {v:'Wat gebeurt er bij een hoge temperature?',o:['Antwoorden worden korter en zakelijker','Het model zoekt in meer bronnen tegelijk','Meer variatie (en meer kans op onzin)','Het model wordt nauwkeuriger en preciezer'],g:2,u:'Hoge temperature betekent dat ook minder waarschijnlijke woorden gekozen worden.'},
+  {v:'Een helmdetector op de bouwplaats is een voorbeeld van…',o:['beeldgeneratie','beeldherkenning','een taalmodel','spraakherkenning'],g:1,u:'Het herkent iets op een beeld en maakt niets nieuws.'},
+  {v:'Waarom kan een taalmodel overtuigend fout zijn?',o:['Omdat het bewust onjuiste informatie verspreidt','Het kiest wat waarschijnlijk klinkt, niet wat waar is','Omdat de meeste teksten op internet onjuist zijn','Omdat het geen toegang heeft tot actuele nieuwsbronnen'],g:1,u:'Waarschijnlijk ≠ waar. Daarom moet je altijd controleren.'}],
  reflectie:'Wat verraste je het meest aan hoe een taalmodel werkt? Verandert dat hoe je het gaat gebruiken?'},
 
 {nr:3, fase:'Begrijpen', titel:'Mogelijkheden, beperkingen en hallucinaties', dossier:'vakkennis', urenLeren:3,
@@ -130,10 +130,10 @@ Waar in de opdrachten "stagebedrijf" of "werkgever" staat, lees je dan: je oplei
   {id:'c', titel:'Kennisdatum testen', uren:1, tekst:'<p>Vraag aan twee tools wat hun kennisdatum is en stel een vraag over iets van de afgelopen maand. Zoekt de tool op internet? Hoe zie je dat (bronvermelding)?</p>', invoer:'Tool 1: … / Tool 2: …',
    pro:'Gebruik de "deep research"- of onderzoeksfunctie van je betaalde tool voor een vakvraag. Controleer 3 van de genoemde bronnen: bestaan ze en staat er écht wat de AI zegt?'}
  ],
- quiz:[{v:'Wat is een hallucinatie?',o:['Een AI die een afbeelding maakt','Een overtuigend klinkend maar onjuist antwoord','Een AI die weigert te antwoorden','Een storing van de server'],g:1},
-  {v:'Wat is de kennisdatum van een model?',o:['De datum waarop jij het gebruikt','Tot wanneer de trainingsdata loopt','De datum van de laatste update van de app','De houdbaarheid van je abonnement'],g:1},
-  {v:'Je zegt tegen de AI "Dat klopt niet" en hij geeft je meteen gelijk. Wat is het risico?',o:['Geen, de AI is eerlijk','De AI praat je naar de mond, ook als het eerst goed was','De AI wordt trager','De AI onthoudt het voor altijd'],g:1,u:'Modellen zijn getraind om behulpzaam te zijn en buigen soms te makkelijk mee.'},
-  {v:'Welke taak is het meest riskant om aan AI over te laten?',o:['Een tekst inkorten','Brainstormen over namen','Een veiligheidsberekening voor een constructie','Een e-mail vertalen'],g:2}],
+ quiz:[{v:'Wat is een hallucinatie?',o:['Een AI-afbeelding die niet echt bestaat, zoals een deepfake','Een overtuigend klinkend maar onjuist antwoord','Een AI die weigert te antwoorden op een gewone vraag','Een antwoord dat te lang en te ingewikkeld is'],g:1},
+  {v:'Wat is de kennisdatum van een model?',o:['De datum waarop de app voor het laatst is bijgewerkt','Tot wanneer de trainingsdata van het model loopt','De datum tot wanneer je abonnement geldig is','De datum waarop jij het gesprek bent begonnen'],g:1},
+  {v:'Je zegt tegen de AI "Dat klopt niet" en hij geeft je meteen gelijk. Wat is het risico?',o:['Geen: de AI controleert je opmerking altijd eerst','Hij praat je naar de mond, ook als het eerst goed was','De AI onthoudt de correctie en past het voor iedereen aan','De AI stopt met antwoorden tot je een nieuw gesprek start'],g:1,u:'Modellen zijn getraind om behulpzaam te zijn en buigen soms te makkelijk mee.'},
+  {v:'Welke taak is het meest riskant om aan AI over te laten?',o:['Een lange tekst inkorten voor een nieuwsbrief','Brainstormen over namen voor een nieuw product','Een veiligheidsberekening voor een constructie','Een zakelijke e-mail vertalen naar het Engels'],g:2}],
  reflectie:'Bij welke taak in je vak zou een hallucinatie de meeste schade doen? Hoe voorkom je dat?'},
 
 {nr:4, fase:'Begrijpen', titel:'Ethiek, privacy en digitale veiligheid', dossier:'vakkennis', urenLeren:3,
@@ -172,10 +172,10 @@ Waar in de opdrachten "stagebedrijf" of "werkgever" staat, lees je dan: je oplei
   {id:'c', titel:'Ethisch dilemma uit mijn vak', uren:1, tekst:'<p>Beschrijf één situatie uit je beroep waarin AI gebruiken legaal is maar ethisch twijfelachtig. Wat zou jij doen en waarom?</p>', invoer:'Situatie: …\nMijn keuze en waarom: …'}
  ],
  context:{ict:'Dilemma: je mag een AI-tool de logbestanden van een klantserver laten analyseren. Die bevatten IP-adressen en gebruikersnamen.',bouw:'Dilemma: AI maakt een prachtige impressie van een nieuwbouwwijk, maar de omgeving ziet er rooskleuriger uit dan in werkelijkheid. Mag dat in een verkoopbrochure?',tt:'Dilemma: een AI-assistent stelt een snellere werkwijze voor bij onderhoud, maar slaat een veiligheidsstap (LOTO) over.',design:'Dilemma: een klant vraagt een illustratie "in de stijl van" een levende illustrator. Met AI kan dat in seconden.',llo:'Dilemma: je laat AI feedback geven op werk van studenten of collega\'s. Moeten zij dat weten?'},
- quiz:[{v:'Je verwijdert de naam uit een klantmelding, maar het adres en geboortejaar staan er nog in. Is het nu anoniem?',o:['Ja, zonder naam is het anoniem','Nee, adres en geboortejaar zijn samen herleidbaar','Ja, als het een zakelijke klant is','Alleen in Copilot'],g:1},
-  {v:'Waarom is Copilot met je schoolaccount veiliger dan een gratis consumentenaccount?',o:['Het model is slimmer','Je invoer wordt onder zakelijke afspraken verwerkt en niet gebruikt voor training','Het werkt zonder internet','Het maakt nooit fouten'],g:1},
-  {v:'Je krijgt een spraakbericht van je "manager" die vraagt snel een betaling te doen. Wat doe je?',o:['Direct betalen','Terugbellen via een bekend nummer om te checken','Het bericht in een AI-tool zetten','Niets, negeren is altijd goed'],g:1,u:'Stemmen zijn met AI na te maken. Verifieer via een ander kanaal.'},
-  {v:'Welk gegeven is een bijzonder persoonsgegeven?',o:['E-mailadres','Gezondheidsinformatie','Postcode','Functietitel'],g:1}],
+ quiz:[{v:'Je verwijdert de naam uit een klantmelding, maar het adres en geboortejaar staan er nog in. Is het nu anoniem?',o:['Ja, zonder naam is de melding niet meer te herleiden','Nee, adres en geboortejaar zijn samen herleidbaar','Ja, als het om een zakelijke klant gaat','Alleen als je de melding in Copilot gebruikt'],g:1},
+  {v:'Waarom is Copilot met je schoolaccount veiliger dan een gratis consumentenaccount?',o:['Copilot gebruikt een slimmer model dan de gratis versie','Je invoer valt onder zakelijke afspraken (geen training)','Copilot slaat je gesprekken alleen lokaal op je laptop op','Copilot weigert automatisch alle persoonsgegevens'],g:1},
+  {v:'Je krijgt een spraakbericht van je "manager" die vraagt snel een betaling te doen. Wat doe je?',o:['Direct betalen, want de stem is echt van je manager','Terugbellen via een nummer dat je al kent om te checken','Het bericht door een AI-tool laten controleren op echtheid','Antwoorden op het bericht en om een schriftelijke bevestiging vragen'],g:1,u:'Stemmen zijn met AI na te maken. Verifieer via een ander kanaal.'},
+  {v:'Welk gegeven is een bijzonder persoonsgegeven?',o:['E-mailadres','Gezondheidsinformatie','Postcode en huisnummer','Functietitel en werkgever'],g:1}],
  reflectie:'Welke afspraak uit je eigen AI-richtlijn vind je het belangrijkst, en waarom?'},
 
 /* ================= FASE 2 KIEZEN (W1) ================= */
@@ -219,10 +219,10 @@ Waar in de opdrachten "stagebedrijf" of "werkgever" staat, lees je dan: je oplei
   {id:'c', titel:'Bronnenkritiek', uren:1, tekst:'<p>Zoek één online "beste AI-tools voor [jouw beroep]"-artikel. Beoordeel: wie schreef het, wanneer, verdient de schrijver eraan (affiliate)? Hoe betrouwbaar is het?</p>', invoer:'Artikel: …\nOordeel: …'}
  ],
  context:{ict:'Denk naast de assistenten aan GitHub Copilot, AI in je IDE, AI in monitoring- of ticketingsoftware.',bouw:'Denk aan AI-render-tools, AI in Revit/Archicad/SketchUp, tools die bestekken of bouwbesluit-teksten doorzoeken.',tt:'Denk aan AI in CAD (bijv. Fusion, SolidWorks), PLC-programmeerhulp, beeldinspectie, onderhoudsdocumentatie.',design:'Denk aan Firefly, Canva, Figma AI, videogenerators, stem- en muziektools.',llo:'Denk aan Copilot in M365, AI in je leerplatform, tools om toetsvragen of lesmateriaal te maken.'},
- quiz:[{v:'Welke bron is het betrouwbaarst voor de actuele prijs van een AI-tool?',o:['Een TikTok-video','De prijspagina van de aanbieder','Een "top 10"-artikel uit 2023','Het antwoord van de AI-tool zelf'],g:1},
-  {v:'Waarom gebruik je voor schoolwerk bij voorkeur Copilot met je schoolaccount?',o:['Het is de slimste AI','Betere afspraken over je gegevens','Het heeft geen limieten','Het werkt offline'],g:1},
-  {v:'Wat moet je volgens werkproces 1 per tool documenteren?',o:['Alleen de prijs','Kosten, gebruiksgemak, basisfunctionaliteiten en mogelijkheden voor je beroep','Alleen of het gratis is','De naam van de CEO'],g:1},
-  {v:'Waarom is een "top 10 AI-tools"-artikel zonder datum verdacht?',o:['AI-tools veranderen snel; info kan verouderd zijn','Artikelen zonder datum zijn altijd nep','Er zijn maar 5 AI-tools','Het maakt niet uit'],g:0}],
+ quiz:[{v:'Welke bron is het betrouwbaarst voor de actuele prijs van een AI-tool?',o:['Een review-video van een bekende tech-influencer','De officiële prijspagina van de aanbieder zelf','Een "top 10"-artikel van een grote techsite','Het antwoord van de AI-tool zelf als je het vraagt'],g:1},
+  {v:'Waarom gebruik je voor schoolwerk bij voorkeur Copilot met je schoolaccount?',o:['Het is de slimste en snelste AI die er is','Betere afspraken over je gegevens en privacy','Het heeft geen limiet op het aantal berichten','Het werkt ook zonder internetverbinding'],g:1},
+  {v:'Wat moet je volgens werkproces 1 per tool documenteren?',o:['Prijs, aanbieder en het aantal gebruikers wereldwijd','Kosten, gebruiksgemak, functies, gebruik in je vak','Of de tool gratis is en in het Nederlands werkt','Naam, logo, versie en datum van de laatste update'],g:1},
+  {v:'Waarom is een "top 10 AI-tools"-artikel zonder datum verdacht?',o:['AI-tools veranderen snel; het kan verouderd zijn','Artikelen zonder datum zijn altijd door AI geschreven','Zonder datum mag een artikel geen tools aanraden','Een datum is alleen belangrijk bij nieuwsberichten'],g:0}],
  reflectie:'Welke tool op je longlist kende je nog niet, en waarom is die interessant voor jouw werk?'},
 
 {nr:6, fase:'Kiezen', titel:'Beoordelen: criteria en beslismatrix', dossier:'W1 · vergelijken en selecteren', urenLeren:2,
@@ -253,10 +253,10 @@ Waar in de opdrachten "stagebedrijf" of "werkgever" staat, lees je dan: je oplei
   {id:'c', titel:'Peerfeedback', uren:1, tekst:'<p>Wissel je matrix uit met iemand uit een ander beroep. Welke criteria of gewichten verschillen? Wat neem je over?</p>', invoer:'Feedback ontvangen: …\nAanpassing: …'}
  ],
  context:{ict:'Een developer weegt integratie met de IDE en codekwaliteit zwaar; privacy van klantcode is knock-out.',bouw:'Een werkvoorbereider weegt "kan PDF-tekeningen en bestekken lezen" zwaar; Nederlandse vaktaal is belangrijk.',tt:'Een monteur weegt "werkt op telefoon/tablet op locatie" en "kan foto\'s analyseren" zwaar.',design:'Een vormgever weegt beeldkwaliteit en commerciële gebruiksrechten zwaar.',llo:'Een docent weegt privacy (leerlinggegevens) en beschikbaarheid via de schoollicentie zwaar.'},
- quiz:[{v:'Wat is een knock-outcriterium?',o:['Het criterium met het hoogste gewicht','Een harde eis: haalt een tool die niet, dan valt hij af','Een criterium dat je mag overslaan','De prijs'],g:1},
-  {v:'Tool A scoort 4 op een criterium met gewicht 5, tool B scoort 5 op gewicht 2. Wie verdient op deze twee samen meer punten?',o:['Tool A (20 tegen 10)','Tool B','Gelijk','Niet te zeggen'],g:0},
-  {v:'Waarom is alleen een matrix niet genoeg voor een goed advies?',o:['Matrices kloppen nooit','Je moet scores onderbouwen met informatie en tests','Werkgevers lezen geen tabellen','Een matrix is te lang'],g:1},
-  {v:'Welk criterium hoort bij "rechten"?',o:['Mag ik de output commercieel gebruiken?','Hoe snel is de tool?','Werkt het in het Nederlands?','Hoeveel kost het?'],g:0}],
+ quiz:[{v:'Wat is een knock-outcriterium?',o:['Het criterium met het hoogste gewicht in de matrix','Een harde eis: haalt een tool die niet, dan valt hij af','Een criterium dat je pas aan het eind meeweegt','Het criterium waarop alle tools even goed scoren'],g:1},
+  {v:'Tool A scoort 4 op een criterium met gewicht 5, tool B scoort 5 op gewicht 2. Wie verdient op deze twee samen meer punten?',o:['Tool A (20 tegen 10)','Tool B (25 tegen 20)','Gelijk (allebei 20)','Niet te zeggen zonder de andere criteria'],g:0},
+  {v:'Waarom is alleen een matrix niet genoeg voor een goed advies?',o:['Een matrix geeft altijd de verkeerde winnaar aan','Scores moet je onderbouwen met informatie en tests','Opdrachtgevers lezen liever een tekst dan een tabel','Een matrix kan maar vier criteria tegelijk aan'],g:1},
+  {v:'Welk criterium hoort bij "rechten"?',o:['Mag ik de output commercieel gebruiken?','Hoe snel geeft de tool een antwoord?','Werkt de tool goed in het Nederlands?','Hoeveel kost de tool per gebruiker per maand?'],g:0}],
  reflectie:'Welk criterium vond je het moeilijkst om een gewicht te geven? Waarom?'},
 
 {nr:7, fase:'Kiezen', titel:'Testen: gebruiksgemak, betrouwbaarheid, kwaliteit', dossier:'W1 · testen', urenLeren:2,
@@ -284,10 +284,10 @@ Waar in de opdrachten "stagebedrijf" of "werkgever" staat, lees je dan: je oplei
    pro:'Test bij minimaal één taak ook de gratis versie tegen jouw betaalde versie. Is het verschil de prijs waard voor jouw beroep? Neem dit op in je kostenafweging.'},
   {id:'c', titel:'Test een nieuwe tool', uren:1, tekst:'<p>Werkproces 1 vraagt ook dat je <b>nieuwe tools</b> test die op de markt komen. Zoek een tool (of nieuwe functie) die minder dan 3 maanden oud is en test hem met één van je taken.</p>', invoer:'Nieuwe tool/functie: …\nBevinding: …'}
  ],
- quiz:[{v:'Waarom gebruik je bij elke tool exact dezelfde prompt?',o:['Dat is sneller','Zo vergelijk je eerlijk','Tools accepteren geen andere prompts','Dat hoeft niet'],g:1},
-  {v:'Hoe test je betrouwbaarheid?',o:['Kijken hoe snel het antwoord komt','Feiten checken en dezelfde prompt herhalen','De prijs vergelijken','Kijken naar het logo'],g:1},
-  {v:'Wanneer bepaal je wat een goed resultaat is?',o:['Na het testen','Vooraf','Dat bepaalt de AI','Nooit'],g:1,u:'Anders beoordeel je op gevoel of laat je je leiden door het eerste mooie antwoord.'},
-  {v:'Wat hoort minimaal in je testdocumentatie?',o:['Alleen de winnaar','Datum, tool en versie, prompt, score en toelichting','Een screenshot van het logo','Je wachtwoord'],g:1}],
+ quiz:[{v:'Waarom gebruik je bij elke tool exact dezelfde prompt?',o:['Dat scheelt tijd bij het voorbereiden van de test','Zo vergelijk je de tools eerlijk en op dezelfde taak','Andere prompts geven een foutmelding bij sommige tools','Zo kun je de antwoorden makkelijker kopiëren'],g:1},
+  {v:'Hoe test je betrouwbaarheid?',o:['Meten hoe snel het antwoord op je scherm komt','Feiten checken en dezelfde prompt nog eens stellen','Kijken of de tool zelf zegt dat hij zeker is','Vergelijken hoeveel gebruikers de tool heeft'],g:1},
+  {v:'Wanneer bepaal je wat een goed resultaat is?',o:['Achteraf, als je de antwoorden gezien hebt','Vooraf, voordat je de eerste prompt stelt','Tijdens het testen, per tool opnieuw','Dat laat je de AI-tool zelf bepalen'],g:1,u:'Anders beoordeel je op gevoel of laat je je leiden door het eerste mooie antwoord.'},
+  {v:'Wat hoort minimaal in je testdocumentatie?',o:['Alleen de winnende tool en het eindcijfer','Datum, tool, versie, prompt, score, toelichting','Screenshots van alle antwoorden, zonder uitleg','Je eigen mening over welke tool het prettigst voelde'],g:1}],
  reflectie:'Welke tool verraste je positief of negatief tijdens het testen?'},
 
 {nr:8, fase:'Kiezen', titel:'Kiezen en adviseren', dossier:'W1 · afstemmen en kiezen', urenLeren:2,
@@ -317,10 +317,10 @@ Waar in de opdrachten "stagebedrijf" of "werkgever" staat, lees je dan: je oplei
   {id:'a', titel:'Adviesgesprek voeren', uren:2, product:'BP1 Tooladvies', tekst:'<p>Bespreek je bevindingen met je opdrachtgever: je BPV-begeleider of leidinggevende als je stage loopt of werkt, anders de vak- of praktijkdocent (of casus-opdrachtgever) die je in week 5 koos. Maak een kort verslag: wat zei de ander, welke vragen kwamen er, wat heb je aangepast?</p>', invoer:'Gesprek met (functie): …\nReactie en vragen: …\nWat ik heb aangepast: …'},
   {id:'b', titel:'Beroepsproduct 1: Tooladvies afronden', uren:5, product:'BP1 Tooladvies', tekst:'<p>Bundel je werk van week 4 t/m 8 tot een tooladvies van 4 tot 8 pagina\'s volgens de opbouw bij Leren. Voeg toe als bijlage: longlist, matrix, testprotocol, gespreksverslag, AI-richtlijn. Lever in via de afgesproken leeromgeving.</p><p>Gebruik je AI bij het schrijven? Mag, maar vermeld <b>hoe</b> (zie de AI-verantwoording in week 15).</p>', invoer:'Link naar mijn document / samenvatting van mijn keuze…'}
  ],
- quiz:[{v:'Waarmee begin je een adviesgesprek bij voorkeur?',o:['Met alle testresultaten','Met je conclusie (de keuze)','Met de prijs','Met een grap'],g:1},
-  {v:'Je opdrachtgever noemt een eis die je vergeten was. Wat doe je?',o:['Negeren, je advies is af','Je advies aanpassen en dat vastleggen','Een andere opdrachtgever zoeken','Opnieuw beginnen met een nieuwe longlist'],g:1},
-  {v:'Wat maakt een keuze "onderbouwd"?',o:['Hij is gebaseerd op gedocumenteerde informatie en testbevindingen','De AI heeft hem aangeraden','Iedereen gebruikt die tool','Hij is het goedkoopst'],g:0},
-  {v:'Mag je AI gebruiken bij het schrijven van je tooladvies?',o:['Nee, nooit','Ja, als je vermeldt hoe je het gebruikt hebt en je het zelf controleert','Ja, zonder vermelding','Alleen Copilot'],g:1}],
+ quiz:[{v:'Waarmee begin je een adviesgesprek bij voorkeur?',o:['Met alle testresultaten, van begin tot eind','Met je conclusie: welke tool je adviseert en waarom','Met de prijs van alle tools op je longlist','Met de geschiedenis van AI in jouw vakgebied'],g:1},
+  {v:'Je opdrachtgever noemt een eis die je vergeten was. Wat doe je?',o:['Niets meer aan doen: je advies is al ingeleverd','Je advies aanpassen en de wijziging vastleggen','Uitleggen waarom die eis niet belangrijk is','Opnieuw beginnen met een nieuwe longlist van tools'],g:1},
+  {v:'Wat maakt een keuze "onderbouwd"?',o:['Gebaseerd op gedocumenteerde info en testbevindingen','De AI-tool heeft hem na een vergelijking aangeraden','De meeste collega\'s in je vakgebied gebruiken die tool','Het is de goedkoopste tool die aan de eisen voldoet'],g:0},
+  {v:'Mag je AI gebruiken bij het schrijven van je tooladvies?',o:['Nee, het tooladvies moet volledig zelf geschreven zijn','Ja, als je vermeldt hoe en de tekst zelf controleert','Ja, en je hoeft dat niet te vermelden als je het controleert','Alleen Copilot, omdat dat via je schoolaccount gaat'],g:1}],
  reflectie:'Wat heb je geleerd van het gesprek met je opdrachtgever?'},
 
 /* ================= FASE 3 INZETTEN (W2) ================= */
@@ -357,10 +357,10 @@ Waar in de opdrachten "stagebedrijf" of "werkgever" staat, lees je dan: je oplei
    pro:'Sla je beste prompt op als herbruikbare instructie in je betaalde tool (bijv. als eigen GPT, Gem, Project of opgeslagen prompt) en test hem met 2 verschillende inputs.'}
  ],
  context:{ict:'Prompt voor een servicedesk-antwoord: rol = 1e-lijns medewerker, context = gebruiker kan niet inloggen na wachtwoordwijziging, toon = vriendelijk, vorm = stappenplan.',bouw:'Prompt voor een bewonersbrief of werkinstructie, met B1-taalniveau en een duidelijke planning.',tt:'Prompt om een onderhoudsprocedure te vereenvoudigen voor een nieuwe collega, met de veiligheidswaarschuwingen behouden.',design:'Prompt voor 5 slogans of een campagnetekst, met doelgroep, merkwaarden en tone of voice.',llo:'Prompt voor een lesopzet, oefenvragen op 3 niveaus of een beleidssamenvatting voor collega\'s.'},
- quiz:[{v:'Welke bouwsteen ontbreekt in: "Je bent een HR-adviseur. Schrijf een vacaturetekst."?',o:['Rol','Taak','Context, toon en vorm','Niets'],g:2},
-  {v:'Waarom zet je [naam klant] in een prompt in plaats van de echte naam?',o:['Dat is korter','Privacy: geen persoonsgegevens in de AI-tool','De AI kent geen namen','Dat is verplicht volgens de tool'],g:1},
-  {v:'Wat doet "Stel me eerst 3 vragen voordat je begint"?',o:['De AI wordt trager','De AI verzamelt ontbrekende context voordat hij schrijft','Niets','De AI weigert'],g:1},
-  {v:'Wat valt onder "stijl"?',o:['De datum','Taalniveau en schrijfstijl, bijv. B1 en korte zinnen','Het aantal woorden','De rol'],g:1}],
+ quiz:[{v:'Welke bouwsteen ontbreekt in: "Je bent een HR-adviseur. Schrijf een vacaturetekst."?',o:['Rol','Taak','Context, toon en vorm','Niets, de prompt is compleet'],g:2},
+  {v:'Waarom zet je [naam klant] in een prompt in plaats van de echte naam?',o:['Dan wordt de prompt korter en het antwoord sneller','Privacy: geen persoonsgegevens in de AI-tool zetten','De AI kan geen echte namen verwerken in een tekst','Omdat de tool anders weigert om de tekst te schrijven'],g:1},
+  {v:'Wat doet "Stel me eerst 3 vragen voordat je begint"?',o:['De AI geeft daarna drie mogelijke antwoorden','Hij vraagt eerst naar ontbrekende context','De AI controleert eerst zijn eigen kennis','De AI vat je vraag in drie punten samen'],g:1},
+  {v:'Wat valt onder "stijl"?',o:['De rol die de AI aanneemt','Taalniveau en schrijfstijl, bijv. B1','Het maximale aantal woorden van de tekst','De doelgroep en de situatie van de lezer'],g:1}],
  reflectie:'Welke bouwsteen maakte bij jouw taken het grootste verschil?'},
 
 {nr:10, fase:'Inzetten', titel:'Iteratief werken: prompt → check → bijstellen', dossier:'W2 · iteratief werken', urenLeren:2,
@@ -391,10 +391,10 @@ Waar in de opdrachten "stagebedrijf" of "werkgever" staat, lees je dan: je oplei
   {id:'b', titel:'Vaag → gericht', uren:1, tekst:'<p>Neem 3 vage bijstuur-opdrachten die je zelf gaf en herschrijf ze tot gerichte feedback. Test of het resultaat beter wordt.</p>', invoer:'Vaag → gericht → effect'},
   {id:'c', titel:'Promptbibliotheek bijwerken', uren:1, tekst:'<p>Voeg je verbeterde eindprompt toe aan je promptbibliotheek, met een notitie over wat je onderweg leerde.</p>', invoer:'Verbeterde prompt: …'}
  ],
- quiz:[{v:'Wat is de juiste volgorde volgens werkproces 2?',o:['Prompt → opslaan → controleren','Prompt → controleren → aanpassen → controleren …','Controleren → prompt → opslaan','Opslaan → prompt → versturen'],g:1},
-  {v:'Welke feedback is het meest gericht?',o:['"Beter graag"','"Korter"','"Maak alinea 2 B1-niveau en noem de datum 14 mei"','"Dit is niks"'],g:2},
-  {v:'Wanneer begin je beter een nieuw gesprek?',o:['Altijd na één antwoord','Als het gesprek afdwaalt of erg lang wordt','Nooit','Alleen bij betaalde versies'],g:1},
-  {v:'Waarom houd je een iteratielog bij?',o:['Dat vindt de AI fijn','Als bewijs van je iteratieve werkwijze en om ervan te leren','Om tokens te besparen','Het is verplicht volgens de AVG'],g:1}],
+ quiz:[{v:'Wat is de juiste volgorde volgens werkproces 2?',o:['Prompt → controleren → opslaan → versturen …','Prompt → controleren → aanpassen → controleren …','Controleren → prompt → aanpassen → opslaan …','Prompt → aanpassen → opslaan → controleren …'],g:1},
+  {v:'Welke feedback is het meest gericht?',o:['"Maak het beter en professioneler"','"Korter graag, en wat zakelijker"','"Alinea 2 naar B1 en noem 14 mei"','"Dit is niet wat ik bedoelde, probeer opnieuw"'],g:2},
+  {v:'Wanneer begin je beter een nieuw gesprek?',o:['Na elk antwoord, zodat elk antwoord fris is','Als het gesprek afdwaalt of erg lang wordt','Alleen als de tool een foutmelding geeft','Nooit: de AI onthoudt anders je eerdere wensen niet'],g:1},
+  {v:'Waarom houd je een iteratielog bij?',o:['Zodat de AI kan zien wat je eerder hebt gevraagd','Als bewijs van je werkwijze en om ervan te leren','Om bij te houden hoeveel tokens je gebruikt','Omdat de AVG verplicht om prompts te bewaren'],g:1}],
  reflectie:'Hoeveel iteraties had je nodig? Wat zou je de volgende keer meteen in je eerste prompt zetten?'},
 
 {nr:11, fase:'Inzetten', titel:'Informatie verzamelen en betrouwbaarheid checken', dossier:'W2 · informatie ophalen en controleren', urenLeren:3,
@@ -426,10 +426,10 @@ Waar in de opdrachten "stagebedrijf" of "werkgever" staat, lees je dan: je oplei
   {id:'c', titel:'Bronnenlijst voor mijn vak', uren:1, tekst:'<p>Maak een lijst van 5 betrouwbare bronnen voor jouw vakgebied waarmee je AI-informatie kunt controleren.</p>', invoer:'1. … 2. …'}
  ],
  context:{ict:'Check: bestaat dat PowerShell-commando echt, met die parameters? (Microsoft Learn-documentatie)',bouw:'Check: noemt de AI het juiste artikel uit het Besluit bouwwerken leefomgeving (Bbl)? (wetten.overheid.nl)',tt:'Check: klopt de aanhaalmoment-tabel of foutcode? (fabrikantdocumentatie)',design:'Check: klopt de uitleg over licenties of beeldrechten? (de licentietekst zelf)',llo:'Check: klopt wat de AI zegt over de onderwijswetgeving of cao? (officiële bron)'},
- quiz:[{v:'Wat is lateraal lezen?',o:['Heel snel lezen','Andere bronnen openen om een bron en bewering te checken','Alleen de eerste alinea lezen','Lezen in een tweede taal'],g:1},
-  {v:'Een AI geeft een bron. Wat is de eerste check?',o:['Bestaat de bron en staat het er echt?','Hoe mooi is de website?','Is de bron Engels?','Niets, bron = betrouwbaar'],g:0},
-  {v:'Wat is het voordeel van AI laten antwoorden op je eigen documenten?',o:['Het is altijd gratis','Antwoorden zijn gebaseerd op jouw bronnen en dus beter te controleren','Je hoeft niets meer te checken','Het werkt zonder internet'],g:1},
-  {v:'Welke bron is het betrouwbaarst voor een wetsartikel?',o:['Een forum','wetten.overheid.nl','Een AI-chat','Een blog uit 2019'],g:1}],
+ quiz:[{v:'Wat is lateraal lezen?',o:['Snel scannend lezen om de kern te vinden','Andere bronnen openen om een bron te checken','Alleen de inleiding en conclusie lezen','Een lange tekst eerst laten samenvatten door een AI'],g:1},
+  {v:'Een AI geeft een bron. Wat is de eerste check?',o:['Bestaat de bron, en staat de bewering er echt in?','Ziet de website er professioneel en actueel uit?','Is de bron Engels- of Nederlandstalig?','Geeft de AI meer dan één bron voor de bewering?'],g:0},
+  {v:'Wat is het voordeel van AI laten antwoorden op je eigen documenten?',o:['Het is altijd gratis en zonder berichtenlimiet','Antwoorden komen uit jouw bronnen: beter te checken','Je hoeft de antwoorden daarna niet meer te controleren','Het werkt ook zonder internet op je eigen laptop'],g:1},
+  {v:'Welke bron is het betrouwbaarst voor een wetsartikel?',o:['Een vakforum met juristen','wetten.overheid.nl (officieel)','Een AI-chat met zoekfunctie','Een juridische blog uit 2019'],g:1}],
  reflectie:'Hoeveel van je factchecks klopten? Wat zegt dat over hoe je AI voor informatie gebruikt?'},
 
 {nr:12, fase:'Inzetten', titel:'Beelden en geluid genereren', dossier:'W2 · content produceren', urenLeren:3,
@@ -465,9 +465,9 @@ Waar in de opdrachten "stagebedrijf" of "werkgever" staat, lees je dan: je oplei
  ],
  context:{ict:'Een schema of icoon voor een handleiding, of een illustratie voor een phishing-awareness-poster.',bouw:'Een sfeerimpressie van een interieur of een uitlegtekening voor bewoners. Let op: maatvoering klopt bij AI nooit.',tt:'Een instructieplaatje "zo NIET" en "zo WEL" voor een veilige werkplek.',design:'Moodboard, stijlvarianten of mock-up. En de vraag: waar zit jouw vakmanschap nog?',llo:'Een illustratie voor lesmateriaal of een voorleesversie van een tekst voor leerlingen met dyslexie.'},
  quiz:[{v:'Welke tool maakt géén foto-achtige afbeeldingen?',o:['Copilot','ChatGPT','Gemini','Claude'],g:3,u:'Claude kan wel diagrammen, SVG en webpagina\'s maken, maar geen foto-afbeeldingen.'},
-  {v:'Waar moet je bij AI-beeld in een technisch vak extra op letten?',o:['De kleur','Technische juistheid en veilige situaties','De bestandsgrootte','Niets'],g:1},
-  {v:'Wanneer verplicht de AI Act een label op AI-content?',o:['Nooit','Bij deepfakes: realistische, gemanipuleerde beelden, geluid of video van echte personen of situaties','Alleen bij muziek','Alleen in de VS'],g:1},
-  {v:'Wat zet je in "wat níét" van een beeldprompt?',o:['Je naam','Elementen die je niet wilt, zoals tekst of logo\'s','De prijs','Niets, dat werkt niet'],g:1}],
+  {v:'Waar moet je bij AI-beeld in een technisch vak extra op letten?',o:['De kleuren en de stijl van het beeld','Technische juistheid en veilige situaties','De bestandsgrootte en resolutie van het beeld','Of het beeld er modern en aantrekkelijk uitziet'],g:1},
+  {v:'Wanneer verplicht de AI Act een label op AI-content?',o:['Bij elke tekst waar AI aan heeft meegeschreven','Bij deepfakes van echte personen, plekken of situaties','Alleen bij muziek en stemmen die met AI gemaakt zijn','Alleen als de content commercieel gebruikt wordt'],g:1,u:'Het gaat om realistische, gemanipuleerde beelden, geluid of video van echte personen of situaties.'},
+  {v:'Wat zet je in "wat níét" van een beeldprompt?',o:['Je naam en de datum als maker van het beeld','Elementen die je niet wilt, zoals tekst','De stijl die je juist wél wilt zien','Het formaat en de beeldverhouding'],g:1}],
  reflectie:'Zou je AI-beeld of -geluid in je eigen beroep echt inzetten? Waarvoor wel en waarvoor niet?'},
 
 {nr:13, fase:'Inzetten', titel:'Bias en representativiteit', dossier:'W2 · beoordelen', urenLeren:3,
@@ -501,10 +501,10 @@ Waar in de opdrachten "stagebedrijf" of "werkgever" staat, lees je dan: je oplei
   {id:'b', titel:'Bias-check op BP2', uren:2, product:'BP2 Praktijkopdracht', tekst:'<p>Controleer de content van je praktijkopdracht op bias en representativiteit. Vraag ook de AI zelf: "Controleer deze tekst op stereotypen, eenzijdigheid of een niet-Nederlandse context." Wat neem je over?</p>', invoer:'Bevindingen en aanpassingen…'},
   {id:'c', titel:'Toeslagenaffaire: wat leren we?', uren:2, tekst:'<p>Lees een betrouwbaar artikel over de rol van algoritmes in de toeslagenaffaire. Schrijf in 150 woorden wat dit betekent voor jouw gebruik van AI in je beroep.</p>', invoer:'Mijn les (150 woorden)…'}
  ],
- quiz:[{v:'Waar komt bias in AI vooral vandaan?',o:['Van de stroomvoorziening','Uit trainingsdata en ontwerpkeuzes die door mensen gemaakt zijn','Uit het internet van de toekomst','Bias bestaat niet in AI'],g:1},
-  {v:'Wat is automation bias?',o:['Bias in fabrieksrobots','Te veel vertrouwen in de uitkomst van een computer','Een bug in de AI','Een soort virus'],g:1},
-  {v:'Wat betekent representativiteit?',o:['De content past bij de echte groep mensen of situatie','De AI is snel','Het beeld is mooi','De tekst is lang'],g:0},
-  {v:'Wat is een goede eerste stap om stereotypen in AI-beelden te verminderen?',o:['Nooit meer AI gebruiken','Specifiek prompten over diversiteit en context, en kritisch beoordelen','De kleuren aanpassen','Het beeld kleiner maken'],g:1}],
+ quiz:[{v:'Waar komt bias in AI vooral vandaan?',o:['Uit fouten in de hardware waarop het model draait','Uit de trainingsdata en uit menselijke ontwerpkeuzes','Uit de prompts van andere gebruikers van dezelfde tool','Uit de vertaling van Engelse naar Nederlandse tekst'],g:1},
+  {v:'Wat is automation bias?',o:['Vooroordelen in de software van fabrieksrobots','Te veel vertrouwen in de uitkomst van een computer','Een fout in de AI die steeds terugkomt','Vooroordelen die ontstaan doordat AI taken automatiseert'],g:1},
+  {v:'Wat betekent representativiteit?',o:['De content past bij de echte groep of situatie','De content is gemaakt door een erkende vertegenwoordiger','Het beeld ziet er verzorgd en professioneel uit','Alle groepen komen precies even vaak voor'],g:0},
+  {v:'Wat is een goede eerste stap om stereotypen in AI-beelden te verminderen?',o:['Alleen nog beelden zonder mensen laten maken','Specifiek prompten over diversiteit en kritisch kijken','De AI vragen om "neutrale" beelden te maken','Een andere tool kiezen die geen bias heeft'],g:1}],
  reflectie:'Welke bias zag je in je eigen vak, en wat ga je daar in de praktijk aan doen?'},
 
 {nr:14, fase:'Inzetten', titel:'Auteursrecht, AI Act en andere regels', dossier:'W2 · (wettelijke) kaders', urenLeren:4,
@@ -539,10 +539,10 @@ Waar in de opdrachten "stagebedrijf" of "werkgever" staat, lees je dan: je oplei
   {id:'b', titel:'Regels in mijn beroepspraktijk', uren:3, product:'BP2 Praktijkopdracht', tekst:'<p>Welke (wettelijke) kaders gelden voor je praktijkopdracht? Denk aan AVG, auteursrecht, AI Act-risiconiveau, bedrijfsbeleid en beroepsregels. Leg per kader uit hoe je eraan voldoet.</p>', invoer:'Kader – wat betekent het – hoe voldoe ik eraan'},
   {id:'c', titel:'AI-richtlijn versie 2', uren:1, tekst:'<p>Werk je AI-richtlijn uit week 4 bij met wat je nu weet over auteursrecht en de AI Act.</p>', invoer:'Wijzigingen in mijn richtlijn…'}
  ],
- quiz:[{v:'Is een volledig door AI gemaakte afbeelding in Nederland auteursrechtelijk beschermd?',o:['Ja, altijd van degene die promptte','Meestal niet: er ontbreekt een menselijk, creatief stempel','Ja, van de AI','Ja, van de maker van de AI'],g:1},
-  {v:'Een chatbot op een website valt onder…',o:['verboden','hoog risico','beperkt risico: transparantieplicht','geen regels'],g:2},
-  {v:'Welke toepassing is hoog risico?',o:['Spamfilter','AI die sollicitanten selecteert','Een AI-game','Een tekst herschrijven'],g:1},
-  {v:'Wat verplicht artikel 4 van de AI Act?',o:['Een AI-diploma voor iedereen','Voldoende AI-geletterdheid van medewerkers','Het gebruik van Europese AI','Een verbod op ChatGPT'],g:1}],
+ quiz:[{v:'Is een volledig door AI gemaakte afbeelding in Nederland auteursrechtelijk beschermd?',o:['Ja, altijd van degene die de prompt schreef','Meestal niet: menselijke creativiteit ontbreekt','Ja, de AI-aanbieder is eigenaar van alle output','Ja, maar alleen als je hem binnen 30 dagen registreert'],g:1},
+  {v:'Een chatbot op een website valt onder…',o:['verboden toepassingen','hoog risico: registratie en strenge eisen','beperkt risico: transparantieplicht','minimaal risico: geen regels'],g:2},
+  {v:'Welke toepassing is hoog risico?',o:['Een spamfilter in je mailprogramma','AI die sollicitanten beoordeelt en selecteert','Een AI-tegenstander in een game','Een tool die teksten herschrijft'],g:1},
+  {v:'Wat verplicht artikel 4 van de AI Act?',o:['Een AI-diploma voor iedere werknemer','Voldoende AI-geletterdheid van medewerkers','Het gebruik van Europese AI-modellen','Een aparte AI-functionaris in elke organisatie'],g:1}],
  reflectie:'Welke regel verraste je het meest? Verandert dat hoe je AI in je beroep gebruikt?'},
 
 {nr:15, fase:'Inzetten', titel:'Verwerken, opslaan en verantwoorden', dossier:'W2 · verwerken en opslaan', urenLeren:2,
@@ -571,10 +571,10 @@ Waar in de opdrachten "stagebedrijf" of "werkgever" staat, lees je dan: je oplei
   {id:'b', titel:'AI-verantwoording schrijven', uren:1, product:'BP2 Praktijkopdracht', tekst:'<p>Schrijf de AI-verantwoording voor je praktijkopdracht (welke tool, waarvoor, hoe gecontroleerd, wat is van jou).</p>', invoer:'Mijn AI-verantwoording…'},
   {id:'c', titel:'Peerreview', uren:2, tekst:'<p>Beoordeel het BP2-concept van een medestudent met de zelfcheck op de Toetsing-pagina en geef 2 tops en 2 tips. Verwerk de feedback die je zelf krijgt.</p>', invoer:'Ontvangen feedback + wat ik ermee doe…'}
  ],
- quiz:[{v:'Wat sla je naast de eindversie ook op?',o:['Niets','De gebruikte prompt, tool en bronnen','Je wachtwoord','Alle mislukte afbeeldingen'],g:1},
-  {v:'Wat hoort in een AI-verantwoording?',o:['Alleen "met AI gemaakt"','Welke tool, waarvoor, hoe gecontroleerd en wat van jou is','Je prompts van het hele jaar','De prijs van de tool'],g:1},
-  {v:'Wanneer check je de betrouwbaarheid met andere bronnen?',o:['Vóór het prompten','Als je tevreden bent over de content, vóór je hem gebruikt','Nooit','Alleen bij beelden'],g:1},
-  {v:'Wat doe je met gevoelige gesprekken in je chatgeschiedenis?',o:['Laten staan','Verwijderen als je ze niet meer nodig hebt','Delen met collega\'s','Exporteren naar social media'],g:1}],
+ quiz:[{v:'Wat sla je naast de eindversie ook op?',o:['Niets: de eindversie is genoeg','De gebruikte prompt, tool en bronnen','Alle tussenversies die je niet gebruikt hebt','Een screenshot van je chatgeschiedenis'],g:1},
+  {v:'Wat hoort in een AI-verantwoording?',o:['Alleen de zin "met AI gemaakt"','Tool, waarvoor, hoe gecontroleerd, wat van jou is','Al je prompts van het hele project, letterlijk overgenomen','De naam en prijs van de gebruikte tool'],g:1},
+  {v:'Wanneer check je de betrouwbaarheid met andere bronnen?',o:['Vóór het prompten, zodat de AI goede informatie krijgt','Als je tevreden bent, vóór je de content gebruikt','Alleen als de AI zelf aangeeft dat hij twijfelt','Alleen bij beelden, tekst controleer je zelf al'],g:1},
+  {v:'Wat doe je met gevoelige gesprekken in je chatgeschiedenis?',o:['Laten staan, dan kun je ze later terugvinden','Verwijderen als je ze niet meer nodig hebt','Exporteren naar je OneDrive als back-up','Delen met je docent als bewijs'],g:1}],
  reflectie:'Hoeveel procent van je eindproduct is "AI" en hoeveel is "jij"? Ben je daar tevreden mee?'},
 
 /* ================= FASE 4 BEWIJZEN ================= */
@@ -619,7 +619,7 @@ Waar in de opdrachten "stagebedrijf" of "werkgever" staat, lees je dan: je oplei
   {id:'a', titel:'Presentatie maken en geven', uren:4, tekst:'<p>Maak je presentatie volgens de opbouw bij Leren. Je mag AI gebruiken voor de opzet of afbeeldingen. Vermeld dat dan op je laatste dia.</p>', invoer:'Opbouw van mijn presentatie / ontvangen feedback'},
   {id:'b', titel:'Oefengesprek', uren:2, tekst:'<p>Oefen het criteriumgericht gesprek met een medestudent: stel elkaar 5 vragen uit de lijst op de Toetsing-pagina. Noteer welke vragen lastig waren.</p>', invoer:'Lastige vragen + hoe ik ze nu zou beantwoorden…'}
  ],
- quiz:[{v:'Wat laat je in het criteriumgericht gesprek vooral zien?',o:['Dat je snel kunt typen','Dat je je keuzes kunt uitleggen en onderbouwen','Dat je alle tools kent','Dat je nooit fouten maakt'],g:1}],
+ quiz:[{v:'Wat laat je in het criteriumgericht gesprek vooral zien?',o:['Dat je alle AI-tools uit je longlist kent','Dat je je keuzes kunt uitleggen en onderbouwen','Dat je de beoordelingscriteria uit je hoofd kent','Dat je je eindproduct zonder hulp kunt presenteren'],g:1}],
  reflectie:'Wat heb je geleerd van de presentaties van andere beroepen?'},
 
 {nr:18, fase:'Bewijzen', titel:'Criteriumgericht gesprek en terugblik', dossier:'examen', urenLeren:1,

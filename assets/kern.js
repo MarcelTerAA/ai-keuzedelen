@@ -318,13 +318,20 @@ function startKeuzedeel(){
   }
 
   /* ---------- quiz ---------- */
+  /* antwoorden in willekeurige volgorde, behalve bij een rij getallen (1, 3, 5, 20) */
+  function volgorde(q){
+    const idx = q.o.map((_,i)=>i);
+    if(q.o.every(o=>/^\s*[\d.,]+\s*$/.test(o))) return idx;
+    for(let i=idx.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [idx[i],idx[j]]=[idx[j],idx[i]]; }
+    return idx;
+  }
   function renderQuiz(w){
     const box = document.getElementById('quiz');
     if(!w.quiz || !w.quiz.length){ box.innerHTML=''; return; }
     const antw = {};
     box.innerHTML = `<div class="kaart"><div class="kop"><span class="ico">✅</span><h3>Check jezelf (${w.quiz.length} vragen)</h3></div>
       ${w.quiz.map((q,qi)=>`<div class="vraag" data-q="${qi}"><div class="v">${qi+1}. ${q.v}</div>
-        <div class="opties">${q.o.map((o,oi)=>`<button class="optie" data-o="${oi}"><span class="tx">${o}</span></button>`).join('')}</div><div class="fb"></div></div>`).join('')}
+        <div class="opties">${volgorde(q).map(oi=>`<button class="optie" data-o="${oi}"><span class="tx">${q.o[oi]}</span></button>`).join('')}</div><div class="fb"></div></div>`).join('')}
       <div id="qscore"></div></div>`;
     box.querySelectorAll('.vraag').forEach(vd=>{
       const qi = +vd.dataset.q, q = w.quiz[qi];

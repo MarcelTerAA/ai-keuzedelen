@@ -53,9 +53,9 @@ ${ROUTES}`,
   {id:'c', titel:'Verken één bestaande assistent', uren:1, tekst:'<p>Probeer een bestaande, door anderen gemaakte assistent (bijv. een openbare GPT, een Gem of een agent in Copilot). Wat doet hij goed? Waar merk je dat hij instructies of eigen kennis heeft?</p>', invoer:'Assistent: … / Observaties: …'}
  ],
  context:{ict:'Een "Servicedesk-assistent" die met de interne kennisbank eerstelijnsvragen beantwoordt en een ticket-samenvatting maakt.',bouw:'Een "Bestek- en Bbl-assistent" die vragen van uitvoerders beantwoordt op basis van het projectbestek en de bouwregels.',tt:'Een "Storingsassistent" die monteurs helpt foutcodes te interpreteren op basis van de handleidingen van de machines in de werkplaats.',design:'Een "Huisstijl-assistent" die teksten en beeldvoorstellen controleert en maakt volgens het huisstijlhandboek van een klant.',llo:'Een "Lesmateriaal-assistent" die oefenopdrachten maakt in de stijl en op het niveau van jouw vak, of een "Beleidsvraagbaak" voor collega\'s.'},
- quiz:[{v:'Wat onderscheidt een agent van een assistent?',o:['Een agent is duurder','Een agent voert ook zelf stappen uit, beslist en koppelt met andere systemen','Een agent gebruikt geen taalmodel','Er is geen verschil'],g:1},
-  {v:'Wanneer is een eigen AI-oplossing zinvol?',o:['Als je specifieke kennis, een vaste werkwijze of koppelingen nodig hebt','Altijd','Nooit, standaard-AI is genoeg','Alleen bij ICT-bedrijven'],g:0},
-  {v:'Waarom moet je succes meetbaar maken?',o:['Omdat dat mooi staat','Zodat je later kunt evalueren of de oplossing voldoet aan de eisen','Omdat de AI dat vraagt','Dat hoeft niet'],g:1}],
+ quiz:[{v:'Wat onderscheidt een agent van een assistent?',o:['Een agent is een assistent met een groter contextvenster en een duurder model','Een agent voert zelf stappen uit, neemt beslissingen en koppelt met systemen','Een agent werkt zonder taalmodel, alleen met vaste regels en scripts','Een agent onthoudt alles, een assistent vergeet na elk gesprek alles'],g:1},
+  {v:'Wanneer is een eigen AI-oplossing zinvol?',o:['Als je specifieke kennis, een vaste werkwijze of koppelingen met systemen nodig hebt','Zodra je organisatie meer dan tien medewerkers heeft die AI gebruiken','Als de gratis versie van een standaard-chat te weinig berichten toestaat','Alleen bij ICT-bedrijven, omdat je er altijd voor moet kunnen programmeren'],g:0},
+  {v:'Waarom moet je succes meetbaar maken?',o:['Zodat je opdrachtgever ziet hoeveel tijd je eraan besteed hebt','Om later te kunnen toetsen of de oplossing aan de eisen voldoet','Omdat een taalmodel meetbare doelen nodig heeft om goed te werken','Omdat de AI Act dat voor elke AI-toepassing verplicht stelt'],g:1}],
  reflectie:'Waarom heb je voor dit probleem gekozen, en wat maakt het lastig?'},
 
 {nr:2, fase:'Verdiepen', titel:'AI-algoritmes: deep learning, NLP en reinforcement learning', dossier:'vakkennis', urenLeren:4,
@@ -91,11 +91,11 @@ ${ROUTES}`,
   {id:'c', titel:'Algoritmes in mijn vak', uren:1, tekst:'<p>Noem bij elk leertype één toepassing in je eigen vakgebied.</p>', invoer:'Supervised: …\nUnsupervised: …\nReinforcement: …',
    pro:'Code-route: train in Google Colab een klein netwerk (bijv. met de MNIST-tutorial van TensorFlow of PyTorch) en experimenteer met epochs en learning rate. Leg de nauwkeurigheid op train- en testdata vast. Zie je overfitting?'}
  ],
- quiz:[{v:'Wat is een epoch?',o:['Eén gewicht','Eén keer door alle trainingsdata','Een type neuron','De uitkomst van het model'],g:1},
-  {v:'In proefje 4 ligt er een oranje punt midden tussen de paarse. Waarom haalt het neuron dan geen 100%?',o:['De learning rate is te laag','Eén neuron kan alleen een rechte lijn trekken, en die kan de groepen niet meer scheiden','Er zijn te weinig epochs','Het neuron is kapot'],g:1,u:'Oplossing: meer neuronen en lagen (deep learning), of controleren of het punt een fout label heeft.'},
-  {v:'Wat is overfitting?',o:['Het model is te klein','Het model leert de trainingsdata uit het hoofd en werkt slecht op nieuwe data','Het model is te snel','Het model heeft te weinig data gezien'],g:1},
-  {v:'Wat is RLHF?',o:['Een programmeertaal','Bijsturen van een model met beloningen op basis van menselijke voorkeuren','Een soort GPU','Een privacywet'],g:1},
-  {v:'Wat zijn embeddings?',o:['Plaatjes in een tekst','Getalsrepresentaties (vectoren) van betekenis','Wachtwoorden','Kleine modellen'],g:1}],
+ quiz:[{v:'Wat is een epoch?',o:['Eén gewicht dat tijdens het trainen wordt bijgesteld','Eén volledige ronde door alle trainingsvoorbeelden heen','Eén laag neuronen tussen de invoer en de uitvoer van een netwerk','Eén voorspelling die het model doet voor een enkel voorbeeld'],g:1},
+  {v:'In proefje 4 ligt er een oranje punt midden tussen de paarse. Waarom haalt het neuron dan geen 100%?',o:['De learning rate staat te laag, waardoor de lijn niet ver genoeg schuift','Eén neuron trekt alleen een rechte lijn; die scheidt de groepen niet','Twintig epochs is te weinig; met honderd epochs lukt het wel','Het nieuwe punt telt niet mee, omdat het na het trainen is toegevoegd'],g:1,u:'Oplossing: meer neuronen en lagen (deep learning), of controleren of het punt een fout label heeft.'},
+  {v:'Wat is overfitting?',o:['Het model is te klein om alle patronen in de trainingsdata te leren','Het leert de trainingsdata uit het hoofd en doet het slecht op nieuwe data','Het model krijgt te veel verschillende soorten data tegelijk aangeboden','Het model is te lang getraind en wordt daardoor trager in gebruik'],g:1},
+  {v:'Wat is RLHF?',o:['Een techniek waarbij het model zelf feedback geeft op zijn eigen antwoorden','Een model bijsturen met beloningen op basis van menselijke voorkeuren','Een methode om een model te laten leren van het volledige internet','Het handmatig labelen van trainingsdata door mensen vóór de pretraining'],g:1},
+  {v:'Wat zijn embeddings?',o:['Afbeeldingen en tabellen die in een tekstdocument zijn ingevoegd','Lange rijen getallen (vectoren) die de betekenis van tekst weergeven','Kleine, ingebedde versies van een groot taalmodel op je telefoon','De tokens waarin een tekst wordt opgeknipt voordat het model hem leest'],g:1}],
  reflectie:'Welk begrip begrijp je nu echt, en welk nog niet? Hoe ga je dat oplossen?'},
 
 {nr:3, fase:'Verdiepen', titel:'Typen AI-modellen en hun eigenschappen', dossier:'vakkennis · W1', urenLeren:3,
@@ -146,10 +146,10 @@ ${ROUTES}`,
   {id:'c', titel:'Benchmark kritisch lezen', uren:1, tekst:'<p>Zoek een benchmark of leaderboard (bijv. een openbare ranglijst van taalmodellen). Wat meet het? Wat zegt het níét over jouw taak?</p>', invoer:'Benchmark: … / Wat meet het / Wat niet…',
    pro:'Code-route: draai een klein open model lokaal (bijv. via Ollama of LM Studio) en stel het 3 vragen uit je vak. Vergelijk snelheid en kwaliteit met een closed model.'}
  ],
- quiz:[{v:'Welk modeltype gebruik je om op betekenis te zoeken in documenten?',o:['Beeldmodel','Embeddingmodel','Spraakmodel','Videomodel'],g:1},
-  {v:'Wat is een voordeel van een open-weights-model?',o:['Altijd het sterkst','Je kunt het zelf draaien en houdt controle over de data','Het is altijd gratis te gebruiken zonder hardware','Het heeft geen licentie'],g:1},
-  {v:'Waarom zijn benchmarks niet genoeg?',o:['Ze zijn altijd fout','Ze meten standaardtaken, niet jouw specifieke taak','Ze zijn te duur','Ze bestaan niet'],g:1},
-  {v:'Wat is een contextvenster?',o:['Het scherm van de app','Hoeveel tekst een model in één keer kan verwerken','Een venster voor instellingen','De datum van training'],g:1}],
+ quiz:[{v:'Welk modeltype gebruik je om op betekenis te zoeken in documenten?',o:['Een taalmodel met een groot contextvenster','Een embeddingmodel dat tekst omzet in vectoren','Een classificatiemodel dat documenten in categorieën indeelt','Een spraakmodel dat de documenten eerst voorleest'],g:1},
+  {v:'Wat is een voordeel van een open-weights-model?',o:['Het is altijd sterker dan de gesloten modellen van grote aanbieders','Je kunt het zelf draaien en houdt zo de controle over je eigen data','Je kunt het gratis gebruiken zonder eigen hardware of cloudkosten','Je hoeft je niet aan een licentie of gebruiksvoorwaarden te houden'],g:1},
+  {v:'Waarom zijn benchmarks niet genoeg?',o:['Ze worden door de aanbieders zelf gemaakt en zijn dus nooit te vertrouwen','Ze meten standaardtaken, niet jouw taak','Ze meten alleen snelheid en kosten, niet de kwaliteit van antwoorden','Ze gelden alleen voor Engelse teksten en zeggen niets over het Nederlands'],g:1},
+  {v:'Wat is een contextvenster?',o:['De periode waarover het model trainingsdata heeft gezien','Hoeveel tekst (in tokens) het model in één keer kan verwerken','Het deel van de app waarin je instructies en instellingen beheert','Het aantal gesprekken dat het model van jou onthoudt'],g:1}],
  reflectie:'Welk model spreekt je het meest aan voor jouw probleem, en waarom?'},
 
 {nr:4, fase:'Verdiepen', titel:'Eisen opstellen en verantwoord ontwerpen', dossier:'W1 · eisen', urenLeren:3,
@@ -182,10 +182,10 @@ ${ROUTES}`,
   {id:'a', titel:'Programma van eisen', uren:4, product:'BP1 AI-oplossing', tekst:'<p>Stel het programma van eisen op (Oefenen): minimaal 8 toetsbare eisen met MoSCoW. Bespreek ze met je opdrachtgever en pas ze aan.</p>', invoer:'Feedback opdrachtgever + aanpassingen…'},
   {id:'b', titel:'Risico- en kaderanalyse', uren:3, product:'BP1 AI-oplossing', tekst:'<p>Beschrijf voor je oplossing: AI Act-risiconiveau (met onderbouwing), persoonsgegevens (welke, grondslag, minimalisatie), auteurs- en eigendomsrecht van je data, digitale veiligheid en menselijk toezicht. Vertaal de risico\'s naar eisen in je programma van eisen.</p>', invoer:'AI Act: …\nAVG: …\nAuteurs-/eigendomsrecht: …\nVeiligheid: …\nMenselijk toezicht: …'}
  ],
- quiz:[{v:'Welke eis is toetsbaar?',o:['"De assistent geeft goede antwoorden"','"≥ 8 van 10 testvragen inhoudelijk juist volgens een vakexpert"','"De assistent is slim"','"Gebruikers vinden het leuk"'],g:1},
-  {v:'Wat betekent de W in MoSCoW?',o:['Wanted','Won\'t have (deze keer bewust niet)','Wish','Worst case'],g:1},
-  {v:'Wat is AIGP?',o:['Een Europese wet','Een certificering voor AI-governance (IAPP)','Een AI-model','Een privacytool'],g:1},
-  {v:'Wanneer heb je mogelijk een DPIA nodig?',o:['Bij elke AI-oplossing','Als je op grote schaal of risicovol persoonsgegevens verwerkt','Nooit','Alleen bij beeldmodellen'],g:1}],
+ quiz:[{v:'Welke eis is toetsbaar?',o:['"De assistent geeft goede en bruikbare antwoorden op vakvragen"','"Minstens 8 van de 10 testvragen juist volgens een vakexpert"','"De assistent is betrouwbaar, snel en prettig in het gebruik"','"Gebruikers zijn tevreden en gebruiken de assistent graag elke dag"'],g:1},
+  {v:'Wat betekent de W in MoSCoW?',o:['Wanted: eisen die gebruikers graag zien','Won\'t have: deze keer bewust niet','Wish: wensen voor een latere versie','Weighted: eisen met een extra hoog gewicht'],g:1},
+  {v:'Wat is AIGP?',o:['Een Europese wet die regels stelt voor de inzet van AI','Een certificering voor AI-governance van de IAPP, geen wet','Een open AI-model dat speciaal voor overheden is ontwikkeld','De Nederlandse toezichthouder op algoritmes en AI'],g:1},
+  {v:'Wanneer heb je mogelijk een DPIA nodig?',o:['Bij elke AI-oplossing, ook als er geen persoonsgegevens in zitten','Bij grootschalige of risicovolle verwerking van persoonsgegevens','Alleen als je oplossing door een overheidsorganisatie gebruikt wordt','Alleen als je een open-weights-model zelf op een server draait'],g:1}],
  reflectie:'Welke eis was het moeilijkst om toetsbaar te maken?'},
 
 /* ================= FASE 2 SAMENSTELLEN (W1) ================= */
@@ -213,9 +213,9 @@ ${ROUTES}`,
    pro:'Gebruik een API-playground (bijv. Google AI Studio, de OpenAI- of Anthropic-console) om dezelfde taken met verschillende modellen en instellingen te draaien. Noteer ook de tokenkosten per taak.'},
   {id:'b', titel:'Modelkeuze onderbouwen', uren:3, product:'BP1 AI-oplossing', tekst:'<p>Schrijf je modelkeuze (en plan B) met onderbouwing: werking, kosten, geschiktheid voor je oplossing en hoe hij aan de must-haves voldoet. Bereken de verwachte kosten.</p>', invoer:'Keuze: …\nPlan B: …\nOnderbouwing: …\nKostenberekening: …'}
  ],
- quiz:[{v:'Hoe behandel je must-have-eisen bij het vergelijken?',o:['Als gewicht 1','Als knock-outcriteria','Je negeert ze','Als could-have'],g:1},
-  {v:'Waarom beoordeel je bij voorkeur blind?',o:['Dat is sneller','Zo laat je je minder beïnvloeden door merk of verwachting','Het is verplicht','Om tokens te besparen'],g:1},
-  {v:'Waarvoor heb je een plan B?',o:['Voor als het model duurder wordt, verandert of verdwijnt','Voor de vakantie','Dat is niet nodig','Voor de examencommissie'],g:0}],
+ quiz:[{v:'Hoe behandel je must-have-eisen bij het vergelijken?',o:['Je geeft ze het hoogste gewicht in de matrix','Als knock-outcriteria: haalt een model ze niet, dan valt het af','Je telt ze dubbel mee bij het eindtotaal','Je bekijkt ze pas nadat je een model gekozen hebt'],g:1},
+  {v:'Waarom beoordeel je bij voorkeur blind?',o:['Zo kun je meer antwoorden in minder tijd beoordelen','Zo laat je je minder beïnvloeden door merk of verwachting','Zo hoeft je opdrachtgever niet te weten welke modellen je test','Zo voorkom je dat het model zich aanpast aan jouw beoordeling'],g:1},
+  {v:'Waarvoor heb je een plan B?',o:['Voor als je gekozen model duurder wordt, verandert of verdwijnt','Voor als je opdrachtgever het niet eens is met je programma van eisen','Voor als je gebruikerstest slechter uitvalt dan je testset','Voor als je te weinig data hebt om het model zelf te trainen'],g:0}],
  reflectie:'Was de uitkomst van je vergelijking wat je verwachtte?'},
 
 {nr:6, fase:'Samenstellen', titel:'Anatomie van een assistent of agent', dossier:'W1 · samenstellen', urenLeren:3,
@@ -249,10 +249,10 @@ ${ROUTES}`,
   {id:'b', titel:'Systeeminstructie v1 + eerste test', uren:3, product:'BP1 AI-oplossing', tekst:'<p>Schrijf je systeeminstructie (Oefenen) en test hem in een gewone chat: plak hem als eerste bericht en stel 5 vragen. Wat werkt al, wat niet?</p>', invoer:'Testresultaten v1…'},
   {id:'c', titel:'Versiebeheer starten', uren:1, product:'BP1 AI-oplossing', tekst:'<p>Begin een configuratielog: een document waarin je elke versie van je instructies, instellingen en data vastlegt (datum, wat veranderd, waarom). Dit is verplicht bewijs voor W1.</p>', invoer:'Locatie van mijn configuratielog + eerste regel…'}
  ],
- quiz:[{v:'Wat hoort in een systeeminstructie?',o:['Alleen de naam','Rol, doel, werkwijze, kennisgebruik, grenzen, format','Je wachtwoord','De prijs'],g:1},
-  {v:'Wat is MCP?',o:['Een AI-model','Een open standaard om AI aan tools en databronnen te koppelen','Een privacywet','Een programmeertaal'],g:1},
-  {v:'Wat is een verstandige eerste stap bij een agent die mails kan versturen?',o:['Meteen alles automatisch laten versturen','Eerst laten voorstellen en pas na bevestiging versturen','Geen instructies geven','De agent geen toegang tot mail geven en toch laten mailen'],g:1},
-  {v:'Waarom houd je een configuratielog bij?',o:['Voor de lol','Om versies, instellingen en wijzigingen nauwkeurig vast te leggen (eis W1)','Om tokens te besparen','Dat doet het platform al'],g:1}],
+ quiz:[{v:'Wat hoort in een systeeminstructie?',o:['De naam, het logo en een welkomstbericht voor de gebruiker','Rol, doel, werkwijze, kennisgebruik, grenzen, format','Een lijst met alle vragen die gebruikers mogen stellen','De documenten die de assistent als kennis gebruikt'],g:1},
+  {v:'Wat is MCP?',o:['Een taalmodel dat speciaal gemaakt is om agents aan te sturen','Een open standaard om AI-assistenten aan tools en databronnen te koppelen','Een Europese richtlijn voor het veilig koppelen van AI-systemen','Een programmeertaal waarin je AI-agents en hun stappen schrijft'],g:1},
+  {v:'Wat is een verstandige eerste stap bij een agent die mails kan versturen?',o:['Alle mails automatisch laten versturen en achteraf steekproeven doen','Eerst laten voorstellen en pas na jouw bevestiging laten versturen','Alleen mails naar interne collega\'s automatisch laten versturen','De agent een eigen mailadres geven zodat fouten niet opvallen'],g:1},
+  {v:'Waarom houd je een configuratielog bij?',o:['Omdat het platform anders je instellingen na een tijd verwijdert','Om versies, instellingen en wijzigingen nauwkeurig vast te leggen','Om het tokengebruik en de kosten per gesprek bij te houden','Zodat de assistent kan terugkijken welke versie het best werkte'],g:1}],
  reflectie:'Hoeveel zelfstandigheid krijgt jouw oplossing, en waarom precies zoveel?'},
 
 {nr:7, fase:'Samenstellen', titel:'Data verzamelen, ordenen en geschikt maken', dossier:'W1 · data', urenLeren:3,
@@ -287,9 +287,9 @@ ${ROUTES}`,
   {id:'b', titel:'Data geschikt maken', uren:3, product:'BP1 AI-oplossing', tekst:'<p>Schoon je data op, structureer en anonimiseer. Leg vast wat je hebt gedaan (voor/na-voorbeeld).</p>', invoer:'Bewerkingen + voor/na-voorbeeld…'},
   {id:'c', titel:'Testset apart zetten', uren:1, product:'BP2 Evaluatie', tekst:'<p>Verzamel nu al 20 tot 30 echte vragen of taken die je oplossing moet kunnen, met het juiste antwoord (laat een vakexpert dat bevestigen). Zet ze apart en gebruik ze <b>niet</b> als kennis of voorbeeld.</p>', invoer:'Aantal testvragen + wie bevestigde de antwoorden…'}
  ],
- quiz:[{v:'Waarom houd je testdata apart?',o:['Om ruimte te besparen','Anders meet je niet of de oplossing nieuwe vragen aankan','Omdat het moet van de AVG','Dat hoeft niet'],g:1},
-  {v:'Wat is metadata?',o:['Gegevens over de data, zoals naam, versie, datum en bron','Een soort AI-model','Data uit de cloud','Verwijderde data'],g:0},
-  {v:'Wat maakt data representatief?',o:['Het is heel veel','Het lijkt op de echte praktijk, inclusief lastige gevallen','Het is in het Engels','Het is nieuw'],g:1}],
+ quiz:[{v:'Waarom houd je testdata apart?',o:['Zodat het model niet te veel data tegelijk hoeft te verwerken','Anders meet je niet of de oplossing ook nieuwe vragen aankan','Omdat de AVG verplicht om testgegevens apart op te slaan','Zodat je de testdata later alsnog kunt gebruiken om te trainen'],g:1},
+  {v:'Wat is metadata?',o:['Gegevens over de data, zoals naam, versie, datum en bron','De ruwe data voordat je die hebt opgeschoond en geordend','Data die automatisch door een AI-model is gegenereerd','Een samenvatting van alle documenten in je kennisbank'],g:0},
+  {v:'Wat maakt data representatief?',o:['Er is zo veel mogelijk data verzameld, van alle bronnen','Het lijkt op de praktijk, inclusief lastige gevallen','Het bevat alleen de beste en meest complete voorbeelden','Het is recent en afkomstig uit één betrouwbare bron'],g:1}],
  reflectie:'Wat was het lastigst aan je data: vinden, kwaliteit of rechten?'},
 
 {nr:8, fase:'Samenstellen', titel:'Bouwen: je eerste werkende versie', dossier:'W1 · samenstellen', urenLeren:2,
@@ -320,9 +320,9 @@ ${ROUTES}
    pro:'Gebruik de uitgebreide bouwfuncties van je betaalde platform (bijv. acties/koppelingen, eigen GPT, Project met grote kennisbank) en vergelijk het met wat gratis mogelijk was.'},
   {id:'b', titel:'Rooktest met 5 vragen', uren:2, tekst:'<p>Stel je oplossing 5 basisvragen (niet uit je testset!). Werkt de basis: volgt hij de instructies, gebruikt hij de kennis, noemt hij bronnen?</p>', invoer:'Vraag – antwoord – oordeel'}
  ],
- quiz:[{v:'Waar laat je een API-sleutel nooit staan?',o:['In een omgevingsvariabele','In je code of op GitHub','In een wachtwoordkluis','In de instellingen van je hostingdienst'],g:1},
-  {v:'Wat leg je vast bij v1?',o:['Alleen de naam','Instructies, kennis, instellingen en model','Niets, het is nog maar v1','Je cijfer'],g:1},
-  {v:'Wat kun je doen als je platform gratis geen eigen assistenten toestaat?',o:['Stoppen','Instructies + kennis in een document bewaren en aan het begin van elk gesprek plakken, of een gratis API-tier gebruiken','Een illegale versie downloaden','Een medestudent laten betalen'],g:1}],
+ quiz:[{v:'Waar laat je een API-sleutel nooit staan?',o:['In een omgevingsvariabele op je eigen computer','In je code of in een repository op GitHub','In de wachtwoordkluis van je organisatie','In de beveiligde instellingen van je hostingdienst'],g:1},
+  {v:'Wat leg je vast bij v1?',o:['Alleen de naam en de datum van de eerste versie','Instructies, kennis, instellingen en het gekozen model','Niets: vastleggen doe je pas bij de definitieve versie','Alleen de testresultaten van de eerste versie'],g:1},
+  {v:'Wat kun je doen als je platform gratis geen eigen assistenten toestaat?',o:['Overstappen op een betaald abonnement, want anders gaat het niet','Instructies en kennis in een document bewaren en steeds plakken','Een andere opdracht kiezen waarvoor geen assistent nodig is','Een account van iemand anders met een betaalde versie gebruiken'],g:1,u:'Een gratis API-tier kan ook.'}],
  reflectie:'Hoe voelde het om je eigen AI-oplossing te bouwen?'},
 
 {nr:9, fase:'Samenstellen', titel:'Instellingen, parameters en RAG', dossier:'W1 · instellingen en parameters', urenLeren:3,
@@ -369,10 +369,10 @@ ${ROUTES}
   {id:'b', titel:'Parameters of instructies tunen', uren:3, product:'BP1 AI-oplossing', tekst:'<p>No-code: stuur via instructies op lengte, stelligheid en format. Code/playground: experimenteer met temperature en max tokens. Leg vast wat het effect is.</p>', invoer:'Instelling – effect – keuze',
    pro:'Code-route: bouw een minimale RAG-pijplijn met embeddings (bijv. via een embedding-API of een lokaal embeddingmodel) en vergelijk de opgehaalde stukken met de woordteller-simulator.'}
  ],
- quiz:[{v:'Welke temperature past bij een storingsassistent?',o:['Hoog (1,5)','Laag (0–0,3)','Maakt niet uit','Altijd 1'],g:1},
-  {v:'Wat is de R in RAG?',o:['Random','Retrieval: relevante stukken ophalen','Reinforcement','Rendering'],g:1},
-  {v:'Het juiste stuk staat in je document, maar wordt niet gevonden. Wat probeer je?',o:['Een groter model','Documenten beter structureren (kopjes, vaktermen) of meer stukken ophalen','De temperature verhogen','Niets'],g:1},
-  {v:'Wat is een voordeel van RAG boven opnieuw trainen?',o:['Je kunt kennis bijwerken zonder te trainen, met bronverwijzing','RAG is altijd gratis','RAG maakt het model slimmer','Er is geen voordeel'],g:0}],
+ quiz:[{v:'Welke temperature past bij een storingsassistent?',o:['Hoog (1,5): dan komt hij met creatieve oplossingen','Laag (0–0,3): dan zijn de antwoorden voorspelbaar','Gemiddeld (1,0): de standaard is altijd het beste','Wisselend: per vraag laten kiezen door het model'],g:1},
+  {v:'Wat is de R in RAG?',o:['Reasoning: het model eerst laten nadenken','Retrieval: relevante stukken ophalen','Ranking: antwoorden op kwaliteit sorteren','Reinforcement: leren met beloningen'],g:1},
+  {v:'Het juiste stuk staat in je document, maar wordt niet gevonden. Wat probeer je?',o:['Een groter model kiezen met een langer contextvenster','Documenten beter structureren of meer stukken ophalen','De temperature verhogen zodat hij breder gaat zoeken','Het model fine-tunen op de inhoud van het document'],g:1},
+  {v:'Wat is een voordeel van RAG boven opnieuw trainen?',o:['Kennis bijwerken zonder trainen, met bronverwijzing','RAG is gratis, terwijl opnieuw trainen altijd geld kost','RAG maakt het model zelf slimmer in redeneren en rekenen','Met RAG kan het model nooit meer hallucineren'],g:0}],
  reflectie:'Welke aanpassing had het meeste effect op je oplossing?'},
 
 {nr:10, fase:'Samenstellen', titel:'Trainen: few-shot, kennis of fine-tuning?', dossier:'W1 · trainen', urenLeren:3,
@@ -417,10 +417,10 @@ ${ROUTES}
   {id:'b', titel:'Trainen zichtbaar maken', uren:2, tekst:'<p>Train in Teachable Machine een klein beeld- of geluidsmodel voor iets uit je vak (bijv. "goed/fout gemonteerd", "gereedschap herkennen"). Experimenteer met epochs en hoeveelheid voorbeelden. Wat leer je hiervan over trainen?</p>', invoer:'Wat getraind, instellingen, resultaat, les…'},
   {id:'c', titel:'Configuratielog bijwerken', uren:1, product:'BP1 AI-oplossing', tekst:'<p>Leg alle aanpassingen van week 9 en 10 vast in je configuratielog (versie, wijziging, reden, effect).</p>', invoer:'Laatste versie: …'}
  ],
- quiz:[{v:'Waar begin je op de ladder van aanpassing?',o:['Fine-tuning','Eigen model','Instructies','RAG'],g:2},
-  {v:'Wat verandert er bij fine-tuning?',o:['Alleen de prompt','De gewichten van het model','De documenten','Niets'],g:1},
-  {v:'Wat is LoRA?',o:['Een privacywet','Een techniek om goedkoop een klein extra deel van een model te trainen','Een beeldmodel','Een soort RAG'],g:1},
-  {v:'Hoe weet je of een aanpassing helpt?',o:['Op gevoel','Meten met een vaste set vragen voor en na','De AI vragen','Niet te weten'],g:1}],
+ quiz:[{v:'Waar begin je op de ladder van aanpassing?',o:['Fine-tuning op eigen voorbeelden','Een eigen model trainen','Instructies (de systeemprompt)','RAG met eigen documenten'],g:2},
+  {v:'Wat verandert er bij fine-tuning?',o:['Alleen de systeeminstructie die het model meekrijgt','De gewichten van het model, door extra training','De documenten in de kennisbank van het model','Alleen de instellingen zoals temperature en lengte'],g:1},
+  {v:'Wat is LoRA?',o:['Een methode om documenten in stukken te knippen voor RAG','Goedkoop een klein extra deel van een model trainen','Een compact open model dat op een laptop draait','Een EU-richtlijn voor het trainen van taalmodellen'],g:1},
+  {v:'Hoe weet je of een aanpassing helpt?',o:['Een paar vragen stellen en kijken of het goed voelt','Meten met een vaste vragenset, vóór en na de aanpassing','Het model zelf vragen of de nieuwe versie beter is','Gebruikers na een maand vragen of ze tevreden zijn'],g:1}],
  reflectie:'Welke trede van de ladder past bij jouw oplossing, en hoe weet je dat?'},
 
 {nr:11, fase:'Samenstellen', titel:'Koppelingen, veiligheid en vastleggen', dossier:'W1 · afronden', urenLeren:3,
@@ -449,9 +449,9 @@ ${ROUTES}
   {id:'a', titel:'Veiligheidsmaatregelen inbouwen', uren:3, product:'BP1 AI-oplossing', tekst:'<p>Beschrijf de risico\'s voor jouw oplossing en bouw minimaal 3 maatregelen in (instructies, rechten, bevestigingsstap, kennisselectie). Test met 3 eigen aanvalspogingen.</p>', invoer:'Risico → maatregel → test → resultaat'},
   {id:'b', titel:'Beroepsproduct 1 afronden', uren:4, product:'BP1 AI-oplossing', tekst:'<p>Bundel BP1: probleemcanvas, programma van eisen, modelonderzoek en -keuze, data-inventaris en bewerkingen, architectuur, configuratielog (alle versies), trainingslog, veiligheidsmaatregelen, en een demo (link of schermopname van max. 3 minuten). Lever in via de afgesproken leeromgeving.</p>', invoer:'Link naar BP1 + demo…'}
  ],
- quiz:[{v:'Wat is indirecte prompt injection?',o:['Een gebruiker scheldt de AI uit','Verborgen instructies in content die de AI leest (document, mail, website)','Een fout in de code','Een te lange prompt'],g:1},
-  {v:'Wat betekent least privilege?',o:['Zo veel mogelijk rechten','Alleen de rechten en data die echt nodig zijn','Geen rechten','Alleen de beheerder heeft rechten'],g:1},
-  {v:'Wanneer is je configuratie goed vastgelegd?',o:['Als jij het nog weet','Als een collega de oplossing ermee opnieuw kan opbouwen','Als het in je chatgeschiedenis staat','Nooit'],g:1}],
+ quiz:[{v:'Wat is indirecte prompt injection?',o:['Een gebruiker die de AI rechtstreeks vraagt zijn regels te negeren','Verborgen instructies in content (mail, document) die de AI leest','Een fout in de code waardoor de prompt verkeerd wordt doorgestuurd','Een prompt die zo lang is dat de systeeminstructie wegvalt'],g:1},
+  {v:'Wat betekent least privilege?',o:['De AI krijgt alle rechten, maar alleen tijdens werktijd','Alleen de rechten en data die voor de taak nodig zijn','Alleen de beheerder mag de AI-oplossing gebruiken','Gebruikers krijgen zo min mogelijk uitleg over de AI'],g:1},
+  {v:'Wanneer is je configuratie goed vastgelegd?',o:['Als alle versies in je chatgeschiedenis bewaard zijn','Als een collega de oplossing ermee kan herbouwen','Als je zelf nog precies weet wat je hebt ingesteld','Als het platform automatisch een back-up maakt'],g:1}],
  reflectie:'Welk risico van je oplossing had je in week 1 niet bedacht?'},
 
 /* ================= FASE 3 EVALUEREN (W2) ================= */
@@ -483,9 +483,9 @@ ${ROUTES}
    pro:'Gebruik een tweede (ander) model als LLM-as-judge met een rubric op alle testgevallen. Vergelijk bij 10 gevallen het oordeel van het model met je eigen oordeel. Hoe vaak zijn jullie het eens?'},
   {id:'c', titel:'Foutenanalyse', uren:1, product:'BP2 Evaluatie', tekst:'<p>Groepeer de fouten op soort. Welke 2 foutsoorten komen het meest voor en wat is je hypothese over de oorzaak (data, instructie, model, ophalen)?</p>', invoer:'Foutsoort 1: … oorzaak: …\nFoutsoort 2: … oorzaak: …'}
  ],
- quiz:[{v:'Waarom moet een testset ook vragen bevatten waarvan het antwoord níét in de kennis staat?',o:['Om de AI te pesten','Om te testen of de oplossing eerlijk zegt dat hij het niet weet in plaats van te verzinnen','Dat hoeft niet','Om tokens te besparen'],g:1},
-  {v:'Wat is een valkuil van LLM-as-judge?',o:['Het is te langzaam','Het beoordelende model heeft ook bias; controleer steekproefsgewijs zelf','Het is verboden','Het werkt alleen in het Engels'],g:1},
-  {v:'Wat doe je bij stijlvergelijking?',o:['De lettertypes vergelijken','De uitkomst naast een voorbeeld van de gewenste stijl leggen (toon, lengte, opbouw)','Twee modellen tegelijk gebruiken','De kleur van de interface aanpassen'],g:1}],
+ quiz:[{v:'Waarom moet een testset ook vragen bevatten waarvan het antwoord níét in de kennis staat?',o:['Om te testen hoe snel de oplossing reageert op lastige vragen','Om te zien of hij toegeeft dat hij het niet weet, i.p.v. te verzinnen','Om de kennisbank later met die antwoorden aan te vullen','Om het model te laten oefenen met onbekende onderwerpen'],g:1},
+  {v:'Wat is een valkuil van LLM-as-judge?',o:['Het is te traag voor testsets met meer dan twintig vragen','Ook de beoordelaar heeft bias: controleer steekproeven zelf','Het mag volgens de AI Act niet voor evaluaties gebruikt worden','Het geeft alleen scores in het Engels, niet in het Nederlands'],g:1},
+  {v:'Wat doe je bij stijlvergelijking?',o:['Twee modellen hetzelfde laten schrijven en de snelste kiezen','Uitkomst naast een voorbeeld van de gewenste stijl leggen','De opmaak en lettertypes van de uitkomst controleren','Het aantal woorden per antwoord tellen en vergelijken'],g:1}],
  reflectie:'Wat zegt je slagingspercentage, en vooral: wat zeggen de fouten?'},
 
 {nr:13, fase:'Evalueren', titel:'Testen met gebruikers uit de praktijk', dossier:'W2 · ervaringen van gebruikers', urenLeren:2,
@@ -510,9 +510,9 @@ ${ROUTES}
   {id:'b', titel:'Gebruikerstest uitvoeren', uren:4, product:'BP2 Evaluatie', tekst:'<p>Test met minimaal 3 echte gebruikers uit de doelgroep. Geen stage of werk? Kies mensen die bij de doelgroep van je opdrachtgever horen: vakdocenten, studenten uit een ander leerjaar of vakmensen uit je omgeving. Noteer observaties per persoon en sla de SUS-scores op bij Oefenen.</p>', invoer:'Testpersoon 1 (functie): observaties…\nTestpersoon 2: …\nTestpersoon 3: …'},
   {id:'c', titel:'Analyse', uren:1, product:'BP2 Evaluatie', tekst:'<p>Welke patronen zie je? Maak een lijst van verbeterpunten met prioriteit (hoog/middel/laag).</p>', invoer:'Verbeterpunt – bron (welke testpersonen) – prioriteit'}
  ],
- quiz:[{v:'Wat doe je als observator bij hardop-denken?',o:['Helpen zodra iemand vastloopt','Observeren en noteren, niet helpen','De taak zelf doen','Weggaan'],g:1},
-  {v:'Een SUS-score van 72 is…',o:['slecht','iets boven het gemiddelde (68)','uitstekend','niet te interpreteren'],g:1},
-  {v:'Waarom test je met echte gebruikers en niet alleen met je testset?',o:['Dat is sneller','Om te zien of mensen er in hun echte werk mee uit de voeten kunnen','Testsets zijn fout','Dat moet van de AI Act'],g:1}],
+ quiz:[{v:'Wat doe je als observator bij hardop-denken?',o:['Helpen zodra iemand vastloopt, zodat de test doorgaat','Observeren en alles noteren, maar niet helpen of uitleggen','Na elke taak uitleggen hoe het eigenlijk bedoeld was','De taak eerst één keer voordoen, daarna laten nadoen'],g:1},
+  {v:'Een SUS-score van 72 is…',o:['Slecht: alles onder de 80 is onvoldoende','Iets boven het gemiddelde (68): redelijk','Uitstekend: bijna de hoogst haalbare score','Gemiddeld: precies wat je meestal ziet'],g:1},
+  {v:'Waarom test je met echte gebruikers en niet alleen met je testset?',o:['Omdat een gebruikerstest sneller is dan een testset draaien','Om te zien of mensen er in hun werk mee uit de voeten kunnen','Omdat testsets alleen technische fouten vinden, geen inhoudelijke','Omdat de AI Act gebruikerstests voor elke AI-oplossing verplicht'],g:1}],
  reflectie:'Wat deden gebruikers anders dan je verwachtte?'},
 
 {nr:14, fase:'Evalueren', titel:'Bias-, risico- en red-team-analyse', dossier:'W2 · betrouwbaarheid en risico\'s', urenLeren:3,
@@ -545,9 +545,9 @@ ${ROUTES}
   {id:'b', titel:'Bias-test', uren:2, product:'BP2 Evaluatie', tekst:'<p>Stel 5 vragen in 2 varianten (andere naam/geslacht/taalniveau/situatie) en vergelijk de antwoorden. Controleer ook of je kennis en testset representatief zijn.</p>', invoer:'Variant A vs. B: verschillen…'},
   {id:'c', titel:'Risicoanalyse', uren:2, product:'BP2 Evaluatie', tekst:'<p>Zet alle gevonden risico\'s in een overzicht met kans, impact en maatregel (oplossen / beperken / accepteren). Neem ook de risico\'s rond auteursrecht, privacy en digitale veiligheid mee.</p>', invoer:'Risico – kans – impact – maatregel'}
  ],
- quiz:[{v:'Wat is red-teaming?',o:['Je oplossing rood kleuren','Bewust proberen je oplossing te laten falen om zwaktes te vinden','Een teamsport','Een type model'],g:1},
-  {v:'Een risico heeft een hoge kans en een hoge impact. Wat doe je?',o:['Accepteren','Oplossen vóór gebruik','Negeren','Alleen documenteren'],g:1},
-  {v:'Hoe test je je oplossing op bias?',o:['Dezelfde vraag stellen met andere namen, taalniveaus of situaties en vergelijken','De AI vragen of hij bias heeft','Dat kan niet','Alleen naar de prijs kijken'],g:0}],
+ quiz:[{v:'Wat is red-teaming?',o:['Een team dat de oplossing bouwt, naast een team dat hem test','Bewust proberen je oplossing te laten falen of te misleiden','De risicoanalyse waarin je hoge risico\'s rood markeert','Een test waarbij je de oplossing onder hoge belasting zet'],g:1},
+  {v:'Een risico heeft een hoge kans en een hoge impact. Wat doe je?',o:['Accepteren en vastleggen in de risicoanalyse','Eerst oplossen, pas daarna in gebruik nemen','Gebruikers waarschuwen in de handleiding','Na de eerste maand gebruik opnieuw bekijken'],g:1},
+  {v:'Hoe test je je oplossing op bias?',o:['Zelfde vraag met andere namen of situaties vergelijken','Het model in de systeeminstructie vragen neutraal te blijven','Het model zelf vragen of zijn antwoorden bias bevatten','Controleren of de trainingsdata uit Europa afkomstig is'],g:0}],
  reflectie:'Welke zwakte in je oplossing vond je het meest verrassend?'},
 
 {nr:15, fase:'Evalueren', titel:'Verbeteren: verder trainen, bijstellen, opnieuw testen', dossier:'W2 · verbeteren', urenLeren:2,
@@ -571,9 +571,9 @@ ${ROUTES}
    pro:'Code-route: voeg nieuwe voorbeelden toe aan je fine-tune-dataset en train opnieuw, of verbeter je RAG (chunkgrootte, k, embeddingmodel). Vergelijk de versies op de eindtest.'},
   {id:'b', titel:'Eindtest', uren:2, product:'BP2 Evaluatie', tekst:'<p>Draai de achtergehouden eindtestvragen op je laatste versie. Voldoet je oplossing aan de eisen? Maak een overzicht: eis → resultaat → voldoet ja/nee.</p>', invoer:'Eis – resultaat – voldoet?'}
  ],
- quiz:[{v:'Waarom verander je per ronde maar één ding?',o:['Dat is sneller','Zo weet je welke aanpassing welk effect had','Het platform staat niet meer toe','Dat hoeft niet'],g:1},
-  {v:'Wat is een regressietest?',o:['Alleen de foute vragen opnieuw testen','De hele testset opnieuw draaien om te zien of iets anders stuk ging','Een test van de prijs','Een test met gebruikers'],g:1},
-  {v:'Wat als je oplossing niet aan alle eisen voldoet?',o:['Dan heb je gefaald','Dat is ook een uitkomst: je advies beschrijft wat nodig is of dat inzet (nog) niet verstandig is','De eisen aanpassen zodat het klopt','Niet vermelden'],g:1}],
+ quiz:[{v:'Waarom verander je per ronde maar één ding?',o:['Omdat het platform maar één wijziging per dag opslaat','Zo weet je precies welke aanpassing welk effect had','Zo hoef je minder vaak de hele testset te draaien','Zo blijft je configuratielog korter en overzichtelijker'],g:1},
+  {v:'Wat is een regressietest?',o:['Alleen de vragen die eerder fout gingen opnieuw testen','Hele testset opnieuw: is er iets anders stuk gegaan?','Testen of de oplossing nog werkt met een ouder model','Een gebruikerstest herhalen met dezelfde testpersonen'],g:1},
+  {v:'Wat als je oplossing niet aan alle eisen voldoet?',o:['Dan is je beroepsproduct onvoldoende en moet je opnieuw beginnen','Dat is ook een uitkomst: je advies beschrijft wat nodig is','De eisen achteraf aanpassen zodat de oplossing wel voldoet','De eisen waaraan hij niet voldoet weglaten uit je verslag'],g:1}],
  reflectie:'Welke verbetering had het grootste effect? Had je dat verwacht?'},
 
 {nr:16, fase:'Evalueren', titel:'Documenteren en adviseren', dossier:'W2 · vastleggen en adviseren', urenLeren:2,
@@ -598,8 +598,8 @@ ${ROUTES}
   {id:'b', titel:'Advies', uren:3, product:'BP2 Evaluatie', tekst:'<p>Schrijf je advies aan je opdrachtgever volgens de opbouw bij Leren (2 tot 4 pagina\'s).</p>', invoer:'Mijn conclusie in één zin: …'},
   {id:'c', titel:'Beroepsproduct 2 afronden', uren:2, product:'BP2 Evaluatie', tekst:'<p>Bundel BP2: testplan, testset met resultaten, foutenanalyse, gebruikerstest (script, observaties, SUS), red-team-log, bias-test, risicoanalyse, verbeterlog, eindtest, bijgewerkte configuratie, model card en advies. Exporteer je logboek als bijlage.</p>', invoer:'Link naar BP2…'}
  ],
- quiz:[{v:'Wat staat er in een model card?',o:['Alleen de naam','Doel, opbouw, data, evaluatie, beperkingen en onderhoud','De broncode','De prijs'],g:1},
-  {v:'Waarmee begint een goed advies?',o:['Met de geschiedenis van AI','Met de conclusie','Met de bijlagen','Met een vraag'],g:1}],
+ quiz:[{v:'Wat staat er in een model card?',o:['De naam, versie en licentie van het gebruikte basismodel','Doel, opbouw, data, evaluatie, beperkingen, onderhoud','De volledige broncode en configuratie van de oplossing','Een overzicht van kosten en gebruik per maand'],g:1},
+  {v:'Waarmee begint een goed advies?',o:['Met een korte geschiedenis van AI in je vakgebied','Met de conclusie: wat adviseer je en waarom?','Met de opzet en de aanpak van je onderzoek','Met een overzicht van alle bijlagen'],g:1}],
  reflectie:'Zou je je opdrachtgever aanraden je oplossing te gebruiken? Waarom wel of niet?'},
 
 /* ================= FASE 4 BEWIJZEN ================= */
